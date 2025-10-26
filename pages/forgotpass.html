@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên Mật Khẩu - Reset Password</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #ffffff; /* Nền trắng */
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Background - Clean and Simple */
+        .bg-animation {
+            display: none;
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .reset-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 48px 40px;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reset-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .icon-container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.15;
+            filter: blur(6px);
+        }
+
+        .lock-icon {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin: 0 0 8px 0;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #718096;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Form Styles */
+        .form-container {
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            background: white;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-input:valid {
+            border-color: #10b981;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: #9ca3af;
+            pointer-events: none;
+        }
+
+        .form-input:focus + .input-icon {
+            color: #667eea;
+        }
+
+        /* Button Styles */
+        .btn {
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(107, 114, 128, 0.1);
+            color: #374151;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(107, 114, 128, 0.15);
+            border-color: #d1d5db;
+            transform: translateY(-1px);
+        }
+
+        /* Loading State */
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .btn.loading .btn-text {
+            opacity: 0;
+        }
+
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .message {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .message.show {
+            display: flex;
+        }
+
+        .message-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #065f46;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .message-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #991b1b;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .message-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1e40af;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .message-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Footer Links */
+        .footer-links {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-link:hover {
+            color: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        /* Steps Indicator */
+        .steps-container {
+            margin-bottom: 32px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .step.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        .step.inactive {
+            background: #f3f4f6;
+            color: #9ca3af;
+        }
+
+        .step-connector {
+            width: 40px;
+            height: 2px;
+            background: #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .step-connector.completed {
+            background: #10b981;
+        }
+
+        .step-label {
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .container {
+                margin: 16px;
+            }
+
+            .reset-card {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .icon-container {
+                width: 64px;
+                height: 64px;
+                margin-bottom: 20px;
+            }
+
+            .lock-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .form-input {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .steps {
+                gap: 12px;
+            }
+
+            .step {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .step-connector {
+                width: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reset-card {
+                padding: 24px 20px;
+            }
+
+            .header {
+                margin-bottom: 32px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #1f2937;
+            }
+
+            .reset-card {
+                background: #374151;
+                border: 1px solid #4b5563;
+                box-shadow: 
+                    0 4px 20px rgba(0, 0, 0, 0.3),
+                    0 1px 3px rgba(0, 0, 0, 0.2);
+            }
+
+            .title {
+                color: #f9fafb;
+            }
+
+            .subtitle {
+                color: #d1d5db;
+            }
+
+            .form-label {
+                color: #e5e7eb;
+            }
+
+            .form-input {
+                background: #4b5563;
+                border-color: #6b7280;
+                color: #f9fafb;
+            }
+
+            .form-input:focus {
+                border-color: #667eea;
+                background: #4b5563;
+            }
+
+            .btn-secondary {
+                background: rgba(75, 85, 99, 0.5);
+                color: #e5e7eb;
+                border-color: #6b7280;
+            }
+
+            .footer-links {
+                border-color: #4b5563;
+            }
+
+            .step.inactive {
+                background: #4b5563;
+                color: #9ca3af;
+            }
+
+            .step-connector {
+                background: #6b7280;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for better accessibility */
+        .btn:focus-visible,
+        .footer-link:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        .form-input:focus-visible {
+            outline: none;
+        }
+
+        /* Animation for form transitions */
+        .form-step {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.4s ease;
+        }
+
+        .form-step.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .form-step.prev {
+            transform: translateX(-20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <main class="container">
+        <div class="reset-card">
+            <!-- Header -->
+            <header class="header">
+                <div class="icon-container">
+                    <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <circle cx="12" cy="16" r="1"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <h1 class="title">Quên Mật Khẩu?</h1>
+                <p class="subtitle">Đừng lo lắng, chúng tôi sẽ giúp bạn khôi phục tài khoản</p>
+            </header>
+
+            <!-- Steps Indicator -->
+            <div class="steps-container">
+                <div class="steps">
+                    <div class="step active" id="step1">1</div>
+                    <div class="step-connector" id="connector1"></div>
+                    <div class="step inactive" id="step2">2</div>
+                    <div class="step-connector" id="connector2"></div>
+                    <div class="step inactive" id="step3">3</div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="message message-success" id="successMessage">
+                <svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4"/>
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+                <span id="successText">Email khôi phục đã được gửi thành công!</span>
+            </div>
+
+            <div class="message message-error" id="errorMessage">
+                <svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+                <span id="errorText">Có lỗi xảy ra. Vui lòng thử lại!</span>
+            </div>
+
+            <div class="message message-info" id="infoMessage">
+                <svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                <span id="infoText">Vui lòng kiểm tra email của bạn</span>
+            </div>
+
+            <!-- Form Container -->
+            <div class="form-container">
+                <!-- Step 1: Email Input -->
+                <form class="form-step active" id="emailForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                placeholder="Nhập địa chỉ email của bạn"
+                                required
+                                autocomplete="email"
+                                aria-describedby="email-help"
+                            >
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div id="email-help" class="sr-only">Nhập email đã đăng ký tài khoản</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="sendEmailBtn">
+                        <span class="btn-text">Gửi Email Khôi Phục</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"/>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"/>
+                        </svg>
+                    </button>
+                </form>
+
+                <!-- Step 2: Verification Code -->
+                <form class="form-step" id="codeForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="verificationCode" class="form-label">Mã Xác Thực</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="text" 
+                                id="verificationCode" 
+                                name="verificationCode" 
+                                class="form-input" 
+                                placeholder="Nhập mã 6 số"
+                                maxlength="6"
+                                pattern="[0-9]{6}"
+                                required
+                                autocomplete="one-time-code"
+                                aria-describedby="code-help"
+                            >
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </div>
+                        <div id="code-help" class="sr-only">Nhập mã 6 số được gửi qua email</div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button type="button" class="btn btn-secondary" id="backToEmailBtn" style="flex: 1;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="19" y1="12" x2="5" y2="12"/>
+                                <polyline points="12,19 5,12 12,5"/>
+                            </svg>
+                            Quay Lại
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="verifyCodeBtn" style="flex: 2;">
+                            <span class="btn-text">Xác Thực</span>
+                        </button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 16px;">
+                        <button type="button" class="footer-link" id="resendCodeBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23,4 23,10 17,10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            Gửi lại mã (<span id="countdown">60</span>s)
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Step 3: New Password -->
+                <form class="form-step" id="passwordForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">Mật Khẩu Mới</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="password" 
+                                id="newPassword" 
+                                name="newPassword" 
+                                class="form-input" 
+                                placeholder="Nhập mật khẩu mới"
+                                minlength="8"
+                                required
+                                autocomplete="new-password"
+                                aria-describedby="password-help"
+                            >
+                            <button type="button" class="input-icon" id="togglePassword1" style="pointer-events: auto; cursor: pointer; background: none; border: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="password-help" class="sr-only">Mật khẩu phải có ít nhất 8 ký tự</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Xác Nhận Mật Khẩu</label>
+                        <div style="position: relative;">
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                name="confirmPassword" 
+                                class="form-input" 
+                                placeholder="Nhập lại mật khẩu mới"
+                                minlength="8"
+                                required
+                                autocomplete="new-password"
+                                aria-describedby="confirm-help"
+                            >
+                            <button type="button" class="input-icon" id="togglePassword2" style="pointer-events: auto; cursor: pointer; background: none; border: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="confirm-help" class="sr-only">Nhập lại mật khẩu để xác nhận</div>
+                    </div>
+
+                    <!-- Password Strength Indicator -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+                            <div class="strength-bar" id="strength1"></div>
+                            <div class="strength-bar" id="strength2"></div>
+                            <div class="strength-bar" id="strength3"></div>
+                            <div class="strength-bar" id="strength4"></div>
+                        </div>
+                        <div id="strengthText" style="font-size: 12px; color: #6b7280;">Độ mạnh mật khẩu: <span id="strengthLevel">Yếu</span></div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button type="button" class="btn btn-secondary" id="backToCodeBtn" style="flex: 1;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="19" y1="12" x2="5" y2="12"/>
+                                <polyline points="12,19 5,12 12,5"/>
+                            </svg>
+                            Quay Lại
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="resetPasswordBtn" style="flex: 2;">
+                            <span class="btn-text">Đặt Lại Mật Khẩu</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12l2 2 4-4"/>
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer-links">
+                <a href="#" class="footer-link" id="backToLoginBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="19" y1="12" x2="5" y2="12"/>
+                        <polyline points="12,19 5,12 12,5"/>
+                    </svg>
+                    Quay lại đăng nhập
+                </a>
+            </footer>
+        </div>
+    </main>
+
+    <style>
+        .strength-bar {
+            height: 4px;
+            flex: 1;
+            background: #e5e7eb;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-bar.weak {
+            background: #ef4444;
+        }
+
+        .strength-bar.fair {
+            background: #f59e0b;
+        }
+
+        .strength-bar.good {
+            background: #10b981;
+        }
+
+        .strength-bar.strong {
+            background: #059669;
+        }
+    </style>
+
+    <script>
+        // Application State
+        let currentStep = 1;
+        let countdownTimer = null;
+        let countdownSeconds = 60;
+
+        // DOM Elements
+        const emailForm = document.getElementById('emailForm');
+        const codeForm = document.getElementById('codeForm');
+        const passwordForm = document.getElementById('passwordForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const infoMessage = document.getElementById('infoMessage');
+        const resendCodeBtn = document.getElementById('resendCodeBtn');
+        const countdownSpan = document.getElementById('countdown');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupPasswordStrengthChecker();
+            setupPasswordToggle();
+        });
+
+        function setupEventListeners() {
+            // Form submissions
+            emailForm.addEventListener('submit', handleEmailSubmit);
+            codeForm.addEventListener('submit', handleCodeSubmit);
+            passwordForm.addEventListener('submit', handlePasswordSubmit);
+
+            // Navigation buttons
+            document.getElementById('backToEmailBtn').addEventListener('click', () => goToStep(1));
+            document.getElementById('backToCodeBtn').addEventListener('click', () => goToStep(2));
+            document.getElementById('backToLoginBtn').addEventListener('click', handleBackToLogin);
+
+            // Resend code
+            resendCodeBtn.addEventListener('click', handleResendCode);
+
+            // Input formatting
+            document.getElementById('verificationCode').addEventListener('input', formatVerificationCode);
+            
+            // Real-time validation
+            document.getElementById('email').addEventListener('blur', validateEmail);
+            document.getElementById('confirmPassword').addEventListener('input', validatePasswordMatch);
+        }
+
+        function setupPasswordStrengthChecker() {
+            const passwordInput = document.getElementById('newPassword');
+            passwordInput.addEventListener('input', checkPasswordStrength);
+        }
+
+        function setupPasswordToggle() {
+            const toggleBtn1 = document.getElementById('togglePassword1');
+            const toggleBtn2 = document.getElementById('togglePassword2');
+            const passwordInput1 = document.getElementById('newPassword');
+            const passwordInput2 = document.getElementById('confirmPassword');
+
+            toggleBtn1.addEventListener('click', () => togglePasswordVisibility(passwordInput1, toggleBtn1));
+            toggleBtn2.addEventListener('click', () => togglePasswordVisibility(passwordInput2, toggleBtn2));
+        }
+
+        function togglePasswordVisibility(input, button) {
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            
+            const icon = button.querySelector('svg');
+            if (isPassword) {
+                icon.innerHTML = `
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                `;
+            } else {
+                icon.innerHTML = `
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                `;
+            }
+        }
+
+        function handleEmailSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            if (!validateEmail(email)) {
+                showMessage('error', 'Vui lòng nhập địa chỉ email hợp lệ');
+                return;
+            }
+
+            setButtonLoading('sendEmailBtn', true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                setButtonLoading('sendEmailBtn', false);
+                showMessage('success', `Email khôi phục đã được gửi đến ${email}`);
+                goToStep(2);
+                startCountdown();
+            }, 2000);
+        }
+
+        function handleCodeSubmit(e) {
+            e.preventDefault();
+            const code = document.getElementById('verificationCode').value;
+            
+            if (code.length !== 6) {
+                showMessage('error', 'Mã xác thực phải có 6 số');
+                return;
+            }
+
+            setButtonLoading('verifyCodeBtn', true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                setButtonLoading('verifyCodeBtn', false);
+                if (code === '123456') { // Demo code
+                    showMessage('success', 'Mã xác thực chính xác!');
+                    goToStep(3);
+                } else {
+                    showMessage('error', 'Mã xác thực không chính xác. Vui lòng thử lại.');
+                }
+            }, 1500);
+        }
+
+        function handlePasswordSubmit(e) {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                showMessage('error', 'Mật khẩu xác nhận không khớp');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showMessage('error', 'Mật khẩu phải có ít nhất 8 ký tự');
+                return;
+            }
+
+            setButtonLoading('resetPasswordBtn', true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                setButtonLoading('resetPasswordBtn', false);
+                showMessage('success', 'Mật khẩu đã được đặt lại thành công!');
+                
+                // Redirect to login after success
+                setTimeout(() => {
+                    handleBackToLogin();
+                }, 2000);
+            }, 2000);
+        }
+
+        function handleResendCode() {
+            if (countdownSeconds > 0) return;
+            
+            const email = document.getElementById('email').value;
+            showMessage('info', `Đang gửi lại mã xác thực đến ${email}...`);
+            
+            setTimeout(() => {
+                showMessage('success', 'Mã xác thực mới đã được gửi!');
+                startCountdown();
+            }, 1000);
+        }
+
+        function handleBackToLogin() {
+            // In a real app, this would redirect to login page
+            showMessage('info', 'Đang chuyển hướng đến trang đăng nhập...');
+            setTimeout(() => {
+                window.location.href = '/login'; // Replace with actual login URL
+            }, 1000);
+        }
+
+        function goToStep(step) {
+            // Hide all forms
+            document.querySelectorAll('.form-step').forEach(form => {
+                form.style.display = 'none';
+                form.classList.remove('active');
+            });
+
+            // Show target form
+            let targetForm;
+            switch(step) {
+                case 1:
+                    targetForm = emailForm;
+                    break;
+                case 2:
+                    targetForm = codeForm;
+                    break;
+                case 3:
+                    targetForm = passwordForm;
+                    break;
+            }
+
+            if (targetForm) {
+                targetForm.style.display = 'block';
+                setTimeout(() => {
+                    targetForm.classList.add('active');
+                }, 50);
+            }
+
+            // Update steps indicator
+            updateStepsIndicator(step);
+            currentStep = step;
+            hideAllMessages();
+        }
+
+        function updateStepsIndicator(activeStep) {
+            for (let i = 1; i <= 3; i++) {
+                const step = document.getElementById(`step${i}`);
+                const connector = document.getElementById(`connector${i}`);
+                
+                if (i < activeStep) {
+                    step.className = 'step completed';
+                    step.innerHTML = '✓';
+                    if (connector) connector.classList.add('completed');
+                } else if (i === activeStep) {
+                    step.className = 'step active';
+                    step.innerHTML = i;
+                } else {
+                    step.className = 'step inactive';
+                    step.innerHTML = i;
+                    if (connector) connector.classList.remove('completed');
+                }
+            }
+        }
+
+        function startCountdown() {
+            countdownSeconds = 60;
+            resendCodeBtn.style.pointerEvents = 'none';
+            resendCodeBtn.style.opacity = '0.6';
+            
+            countdownTimer = setInterval(() => {
+                countdownSeconds--;
+                countdownSpan.textContent = countdownSeconds;
+                
+                if (countdownSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    resendCodeBtn.style.pointerEvents = 'auto';
+                    resendCodeBtn.style.opacity = '1';
+                    countdownSpan.textContent = '60';
+                }
+            }, 1000);
+        }
+
+        function formatVerificationCode(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 6) value = value.slice(0, 6);
+            e.target.value = value;
+        }
+
+        function validateEmail(email) {
+            if (!email) email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePasswordMatch() {
+            const password = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const confirmInput = document.getElementById('confirmPassword');
+            
+            if (confirm && password !== confirm) {
+                confirmInput.style.borderColor = '#ef4444';
+                showMessage('error', 'Mật khẩu xác nhận không khớp');
+            } else if (confirm) {
+                confirmInput.style.borderColor = '#10b981';
+                hideMessage('error');
+            }
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('newPassword').value;
+            const strengthBars = document.querySelectorAll('.strength-bar');
+            const strengthLevel = document.getElementById('strengthLevel');
+            
+            let strength = 0;
+            let level = 'Yếu';
+            let color = '#ef4444';
+            
+            // Check password criteria
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            // Determine strength level
+            if (strength >= 4) {
+                level = 'Mạnh';
+                color = '#059669';
+            } else if (strength >= 3) {
+                level = 'Tốt';
+                color = '#10b981';
+            } else if (strength >= 2) {
+                level = 'Trung bình';
+                color = '#f59e0b';
+            }
+            
+            // Update UI
+            strengthBars.forEach((bar, index) => {
+                if (index < strength) {
+                    bar.style.backgroundColor = color;
+                } else {
+                    bar.style.backgroundColor = '#e5e7eb';
+                }
+            });
+            
+            strengthLevel.textContent = level;
+            strengthLevel.style.color = color;
+        }
+
+        function setButtonLoading(buttonId, loading) {
+            const button = document.getElementById(buttonId);
+            if (loading) {
+                button.classList.add('loading');
+                button.disabled = true;
+            } else {
+                button.classList.remove('loading');
+                button.disabled = false;
+            }
+        }
+
+        function showMessage(type, text) {
+            hideAllMessages();
+            const message = document.getElementById(`${type}Message`);
+            const textElement = document.getElementById(`${type}Text`);
+            
+            if (message && textElement) {
+                textElement.textContent = text;
+                message.classList.add('show');
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    hideMessage(type);
+                }, 5000);
+            }
+        }
+
+        function hideMessage(type) {
+            const message = document.getElementById(`${type}Message`);
+            if (message) {
+                message.classList.remove('show');
+            }
+        }
+
+        function hideAllMessages() {
+            ['success', 'error', 'info'].forEach(type => {
+                hideMessage(type);
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideAllMessages();
+            }
+            
+            if (e.key === 'Enter' && e.ctrlKey) {
+                const activeForm = document.querySelector('.form-step.active form, .form-step[style*="block"] form');
+                if (activeForm) {
+                    activeForm.dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+
+        // Auto-focus first input when step changes
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const target = mutation.target;
+                    if (target.classList.contains('form-step') && target.style.display === 'block') {
+                        const firstInput = target.querySelector('input');
+                        if (firstInput) {
+                            setTimeout(() => firstInput.focus(), 100);
+                        }
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.form-step').forEach(form => {
+            observer.observe(form, { attributes: true });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9943c5ad3214854a',t:'MTc2MTQxNjg5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

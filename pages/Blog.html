@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/menu.css">
+    <title>Blog - ProjectHub | Creative Insights & Inspiration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        .hero-pattern {
+            background-image: radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.1) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+
+        .blog-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .like-btn.liked {
+            color: #ef4444;
+        }
+
+        .comment-btn.active {
+            color: #3b82f6;
+            background-color: #dbeafe;
+        }
+
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+
+        .category-card {
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-detail {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-full">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="flex items-center">
+                        <span class="text-2xl font-bold text-gray-800">UniPortfolio</span>
+                    </a>
+                </div>
+    
+                <!-- Desktop Menu - Centered -->
+                <div class="hidden md:flex flex-1 justify-center">
+                    <div class="flex items-baseline space-x-8">
+                        <a href="index.html" class="menu-item ripple text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Home</a>
+                        <a href="EXPLORE.html" class="menu-item ripple text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Explore</a>
+                        <a href="Project.html" class="menu-item ripple text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Portfolio</a>
+                        <a href="About.html" class="menu-item ripple text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">About Us</a>
+                        <a href="Blog.html" class="menu-item ripple text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Blog/Resources</a>
+                        
+                        <!-- Get Started Dropdown -->
+                        <button onclick="showWriteForm()" class="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">
+                            Write Article
+                        </button>
+                        <div class="relative dropdown">
+                            <button class="btn-press glow-hover bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition duration-300 flex items-center">
+                                Get Started
+                                <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border">
+                                <a href="Login.html" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">Login</a>
+                                <a href="#" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">Contact</a>
+                                <a href="#" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">Register</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <!-- User Avatar Dropdown -->
+    <div class="relative dropdown ml-4">
+        <button class="avatar-btn flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 transition duration-300">
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                <span class="text-white font-semibold text-sm">HH</span>
+            </div>
+        </button>
+        <div class="dropdown-menu user-dropdown-menu absolute right-0 mt-2 bg-white rounded-lg shadow-xl py-2 border border-gray-200">
+            <!-- User Info Header -->
+            <div class="px-4 py-3 border-b border-gray-100">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-semibold">JD</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900">Huy Hoàng</p>
+                        <p class="text-sm text-gray-500">hoanglc645@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Menu Items -->
+            <div class="py-1">
+                <a href="profile.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                    </svg>
+                    Profile
+                </a>
+                <a href="Dashboard.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="Dashboard.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Create Project
+                </a>
+                <a href="Dashboard.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 012-2m0 0V5a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    My Projects
+                </a>
+                <a href="Dashboard.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Timeline
+                </a>
+            </div>
+            
+            <div class="border-t border-gray-100 py-1">
+                <a href="Dashboard.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Settings
+                </a>
+                <a href="Helpcenter.html" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition duration-200">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Help
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex-shrink-0">
+                    <button class="hamburger btn-press" id="mobile-menu-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Mobile Menu -->
+            <div class="mobile-menu md:hidden bg-white border-t" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Home</a>
+                    <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Explore</a>
+                    <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Portfolio</a>
+                    <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">About Us</a>
+                    <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Blog/Resources</a>
+                    
+                    <!-- Mobile Get Started Section -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <div class="px-3 py-2">
+                            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Get Started</p>
+                        </div>
+                        <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Login</a>
+                        <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Contact</a>
+                        <a href="#" class="menu-item text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition duration-300">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+<section class="relative bg-white py-16 lg:py-24 overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 hero-pattern opacity-30"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Content -->
+            <div class="text-left">
+                <div class="flex items-center mb-8">
+                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-blue-600 font-semibold text-lg">Creative Insights</span>
+                        <div class="text-sm text-gray-500 mt-1">Trusted by 50,000+ designers worldwide</div>
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-gray-900 leading-tight">
+                    Stories That 
+                    <span class="text-blue-600 relative">
+                        Inspire
+                        <svg class="absolute -bottom-2 left-0 w-full h-3 text-blue-200" viewBox="0 0 200 12" fill="currentColor">
+                            <path d="M0,8 Q50,2 100,8 T200,8 L200,12 L0,12 Z"/>
+                        </svg>
+                    </span>
+                    <br>Creative Minds
+                </h1>
+                
+                <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl">
+                    Dive deep into the creative process with insights from industry leaders, 
+                    breakthrough project stories, and practical wisdom that will transform your design journey.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-12 items-start justify-start">
+                    <div class="fade-in stagger-2">
+                      <div class="flex gap-4">
+                        <button onclick="scrollToBlogs()" class="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105">
+                          <span class="flex items-center">
+                            <span class="-ml-1">Start Reading</span>
+                            <svg class="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                          </span>
+                        </button>
+          
+                        <button onclick="showCategories()" class="group bg-white/80 backdrop-blur-sm hover:bg-white border-2 border-gray-200 hover:border-blue-300 text-gray-700 hover:text-blue-700 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                          <span class="flex items-center">
+                            Browse Categories
+                            <svg class="w-5 h-5 ml-2 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-8 pt-8 border-t border-gray-200">
+                    <div>
+                        <div class="text-3xl font-bold text-gray-900">500+</div>
+                        <div class="text-sm text-gray-600">Articles Published</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-gray-900">50k+</div>
+                        <div class="text-sm text-gray-600">Monthly Readers</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-gray-900">100+</div>
+                        <div class="text-sm text-gray-600">Expert Contributors</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Visual -->
+            <div class="relative lg:ml-8">
+                <div class="relative">
+                    <!-- Main Card -->
+                    <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Latest Article</div>
+                                <div class="text-sm text-gray-500">Published 2 hours ago</div>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4 leading-tight">
+                            The Future of Design Systems in 2024
+                        </h3>
+                        <p class="text-gray-600 mb-6">
+                            Exploring how design systems are evolving to meet the challenges of modern product development...
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-semibold mr-3">
+                                    JD
+                                </div>
+                                <div class="text-sm text-gray-600">Jane Doe</div>
+                            </div>
+                            <div class="text-sm text-gray-500">5 min read</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-4 -right-4 w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center shadow-lg">
+                        <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -left-6 w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Search Section -->
+    <section class="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Discover Your Next Great Read</h2>
+                <p class="text-gray-600">Search through hundreds of articles, tutorials, and insights</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Search Bar -->
+                <div class="relative">
+                    <div class="relative group">
+                        <input 
+                            type="text" 
+                            id="search-input"
+                            placeholder="Search articles, topics, authors, or categories..."
+                            class="w-full px-8 py-5 pl-16 pr-20 text-lg border-2 border-gray-200 rounded-3xl focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-blue-300"
+                            onkeyup="handleSearch(event)"
+                            onfocus="showSearchDropdown()"
+                        >
+                        <div class="absolute left-6 top-1/2 transform -translate-y-1/2 w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <button onclick="toggleSearchFilters()" class="absolute right-6 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-100 hover:bg-blue-100 rounded-full flex items-center justify-center text-gray-500 hover:text-blue-600 transition-all duration-200">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Search suggestions -->
+                        <div class="absolute top-full left-0 right-0 mt-2 flex flex-wrap gap-2 justify-center">
+                            <button onclick="quickSearch('AI')" class="px-4 py-2 bg-white/70 hover:bg-blue-100 text-gray-700 hover:text-blue-700 rounded-full text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-blue-300">
+                                🤖 AI & Design
+                            </button>
+                            <button onclick="quickSearch('Business')" class="px-4 py-2 bg-white/70 hover:bg-green-100 text-gray-700 hover:text-green-700 rounded-full text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-green-300">
+                                💼 Business Tips
+                            </button>
+                            <button onclick="quickSearch('Tutorial')" class="px-4 py-2 bg-white/70 hover:bg-purple-100 text-gray-700 hover:text-purple-700 rounded-full text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-purple-300">
+                                📚 Tutorials
+                            </button>
+                            <button onclick="quickSearch('Color')" class="px-4 py-2 bg-white/70 hover:bg-orange-100 text-gray-700 hover:text-orange-700 rounded-full text-sm font-medium transition-all duration-200 border border-gray-200 hover:border-orange-300">
+                                🎨 Color Theory
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Dropdown -->
+                    <div id="search-dropdown" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-2xl shadow-xl mt-2 z-30 hidden">
+                        <div class="p-4">
+                            <!-- Quick Categories -->
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">Quick Search</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="quickSearch('Design Systems')" class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors">Design Systems</button>
+                                    <button onclick="quickSearch('UI/UX')" class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm hover:bg-purple-200 transition-colors">UI/UX</button>
+                                    <button onclick="quickSearch('Typography')" class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm hover:bg-green-200 transition-colors">Typography</button>
+                                    <button onclick="quickSearch('Color Theory')" class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm hover:bg-orange-200 transition-colors">Color Theory</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Searches -->
+                            <div class="mb-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">Recent Searches</h4>
+                                <div class="space-y-2">
+                                    <div onclick="quickSearch('AI in design')" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>AI in design</span>
+                                    </div>
+                                    <div onclick="quickSearch('Design trends 2024')" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span>Design trends 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Popular Authors -->
+                            <div>
+                                <h4 class="text-sm font-semibold text-gray-700 mb-2">Popular Authors</h4>
+                                <div class="space-y-2">
+                                    <div onclick="quickSearch('Sarah Chen')" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
+                                        <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">SC</div>
+                                        <span>Sarah Chen</span>
+                                    </div>
+                                    <div onclick="quickSearch('Mike Johnson')" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
+                                        <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">MJ</div>
+                                        <span>Mike Johnson</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search Filters (Hidden by default) -->
+                <div id="search-filters" class="mt-4 bg-white rounded-xl border border-gray-200 p-4 hidden">
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select name="category" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">All Categories</option>
+                                <option value="design-trends">Design Trends</option>
+                                <option value="business">Business</option>
+                                <option value="tutorial">Tutorials</option>
+                                <option value="inspiration">Inspiration</option>
+                                <option value="technology">Technology</option>
+                                <option value="career">Career</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Reading Time</label>
+                            <select name="readingTime" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">Any Length</option>
+                                <option value="short">Under 5 min</option>
+                                <option value="medium">5-10 min</option>
+                                <option value="long">10+ min</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+                            <select name="sortBy" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="newest">Newest First</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="trending">Trending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button onclick="clearFilters()" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                            Clear Filters
+                        </button>
+                        <button onclick="applyFilters()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Story Section -->
+    <section class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 lg:p-12 border border-blue-100">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-bold">
+                            FEATURED
+                        </div>
+                        <svg class="w-8 h-8 text-yellow-500 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                        The Complete Guide to Design Systems: From Strategy to Implementation
+                    </h2>
+                    
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        A comprehensive deep-dive into building scalable design systems that drive consistency, efficiency, and innovation across your entire product ecosystem.
+                    </p>
+                    
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
+                                SC
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Sarah Chen</div>
+                                <div class="text-sm text-gray-600">Design Systems Lead, Google</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-6 text-sm text-gray-600">
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span class="font-medium">15 min read</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                <span class="font-medium">8.2k views</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                <span class="font-medium">642 comments</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <button onclick="openFeaturedStory()" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            Read Full Story
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Stats -->
+    <section class="py-16 bg-white border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="fade-in stagger-1">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">500+</div>
+                    <div class="text-gray-600 font-medium">Articles Published</div>
+                </div>
+                <div class="fade-in stagger-2">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">50K+</div>
+                    <div class="text-gray-600 font-medium">Monthly Readers</div>
+                </div>
+                <div class="fade-in stagger-3">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">200+</div>
+                    <div class="text-gray-600 font-medium">Expert Contributors</div>
+                </div>
+                <div class="fade-in stagger-4">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">25+</div>
+                    <div class="text-gray-600 font-medium">Categories</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section id="blogs-section" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                    Latest Articles
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Fresh perspectives and actionable insights from the creative industry's leading voices.
+                </p>
+            </div>
+            
+            <div id="blogs-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog posts will be rendered here dynamically -->
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center items-center space-x-2 mt-16">
+                <!-- Pagination will be rendered here dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Detail Modal -->
+    <div id="blog-detail-modal" class="fixed inset-0 bg-black/50 modal-backdrop z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full blog-detail">
+                <div id="blog-detail-content">
+                    <!-- Blog detail content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Modal -->
+    <div id="categories-modal" class="fixed inset-0 bg-black/50 modal-backdrop z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto">
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900">Browse Categories</h2>
+                        <button onclick="hideCategories()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div onclick="filterByCategory('Design Trends')" class="category-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl cursor-pointer border border-blue-200">
+                            <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm3 2h2v2H7V4zm8 0h-2v2h2V4zM7 8h2v2H7V8zm8 0h-2v2h2V8zm-8 4h2v2H7v-2zm8 0h-2v2h2v-2z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Design Trends</h3>
+                            <p class="text-gray-600 text-sm">Latest trends and innovations in design</p>
+                            <div class="mt-4 text-blue-600 font-semibold">45 Articles</div>
+                        </div>
+                        
+                        <div onclick="filterByCategory('Business')" class="category-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl cursor-pointer border border-green-200">
+                            <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Business</h3>
+                            <p class="text-gray-600 text-sm">Creative business strategies and tips</p>
+                            <div class="mt-4 text-green-600 font-semibold">32 Articles</div>
+                        </div>
+                        
+                        <div onclick="filterByCategory('Tutorials')" class="category-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl cursor-pointer border border-purple-200">
+                            <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Tutorials</h3>
+                            <p class="text-gray-600 text-sm">Step-by-step guides and how-tos</p>
+                            <div class="mt-4 text-purple-600 font-semibold">67 Articles</div>
+                        </div>
+                        
+                        <div onclick="filterByCategory('Inspiration')" class="category-card bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-2xl cursor-pointer border border-orange-200">
+                            <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Inspiration</h3>
+                            <p class="text-gray-600 text-sm">Creative inspiration and case studies</p>
+                            <div class="mt-4 text-orange-600 font-semibold">28 Articles</div>
+                        </div>
+                        
+                        <div onclick="filterByCategory('Technology')" class="category-card bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 rounded-2xl cursor-pointer border border-indigo-200">
+                            <div class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Technology</h3>
+                            <p class="text-gray-600 text-sm">Tech tools and digital innovations</p>
+                            <div class="mt-4 text-indigo-600 font-semibold">39 Articles</div>
+                        </div>
+                        
+                        <div onclick="filterByCategory('Career')" class="category-card bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-2xl cursor-pointer border border-pink-200">
+                            <div class="w-12 h-12 bg-pink-500 rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Career</h3>
+                            <p class="text-gray-600 text-sm">Career advice and professional growth</p>
+                            <div class="mt-4 text-pink-600 font-semibold">24 Articles</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Write Article Modal -->
+    <div id="write-modal" class="fixed inset-0 bg-black/50 modal-backdrop z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900">Write New Article</h2>
+                        <button onclick="hideWriteForm()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <form onsubmit="submitArticle(event)" class="space-y-6">
+                        <!-- Title -->
+                        <div>
+                            <label for="article-title" class="block text-sm font-semibold text-gray-700 mb-2">Article Title *</label>
+                            <input 
+                                type="text" 
+                                id="article-title"
+                                name="title"
+                                required
+                                placeholder="Enter your article title..."
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 text-lg"
+                            >
+                        </div>
+                        
+                        <!-- Category and Tags Row -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="article-category" class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                                <select 
+                                    id="article-category"
+                                    name="category"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
+                                >
+                                    <option value="">Select a category</option>
+                                    <option value="design-trends">Design Trends</option>
+                                    <option value="business">Business</option>
+                                    <option value="tutorials">Tutorials</option>
+                                    <option value="inspiration">Inspiration</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="career">Career</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="article-tags" class="block text-sm font-semibold text-gray-700 mb-2">Tags</label>
+                                <input 
+                                    type="text" 
+                                    id="article-tags"
+                                    name="tags"
+                                    placeholder="design, ui, ux, tips (comma separated)"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Cover Image -->
+                        <div>
+                            <label for="cover-image" class="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors">
+                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                </svg>
+                                <p class="text-gray-600 mb-2">Click to upload or drag and drop</p>
+                                <p class="text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                                <input type="file" name="coverImage" accept="image/*" class="hidden">
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div>
+                            <label for="article-content" class="block text-sm font-semibold text-gray-700 mb-2">Article Content *</label>
+                            <textarea 
+                                id="article-content"
+                                name="content"
+                                required
+                                rows="12"
+                                placeholder="Write your article content here... You can use markdown formatting."
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 resize-none"
+                            ></textarea>
+                            <div class="mt-2 text-sm text-gray-500">
+                                Supports markdown formatting: **bold**, *italic*, [links](url), etc.
+                            </div>
+                        </div>
+                        
+                        <!-- SEO Settings -->
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">SEO Settings</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="meta-description" class="block text-sm font-semibold text-gray-700 mb-2">Meta Description</label>
+                                    <textarea 
+                                        id="meta-description"
+                                        name="metaDescription"
+                                        rows="2"
+                                        placeholder="Brief description for search engines (150-160 characters)"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500 resize-none"
+                                    ></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label for="slug" class="block text-sm font-semibold text-gray-700 mb-2">URL Slug</label>
+                                    <input 
+                                        type="text" 
+                                        id="slug"
+                                        name="slug"
+                                        placeholder="article-url-slug"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Publishing Options -->
+                        <div class="bg-blue-50 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Publishing Options</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="featured" name="featured" class="w-4 h-4 text-blue-600 rounded">
+                                    <label for="featured" class="text-sm font-medium text-gray-700">Mark as featured article</label>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="newsletter" name="newsletter" class="w-4 h-4 text-blue-600 rounded">
+                                    <label for="newsletter" class="text-sm font-medium text-gray-700">Include in newsletter</label>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="comments-enabled" name="commentsEnabled" checked class="w-4 h-4 text-blue-600 rounded">
+                                    <label for="comments-enabled" class="text-sm font-medium text-gray-700">Enable comments</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                            <button 
+                                type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors flex-1"
+                            >
+                                Publish Article
+                            </button>
+                            
+                            <button 
+                                type="button"
+                                onclick="previewArticle()"
+                                class="border-2 border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-xl font-semibold transition-colors"
+                            >
+                                Preview
+                            </button>
+                            
+                            <button 
+                                type="button"
+                                class="border-2 border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-xl font-semibold transition-colors"
+                            >
+                                Save Draft
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="text-2xl font-bold text-gray-900 mb-4">
+                        ProjectHub
+                    </div>
+                    <p class="text-gray-600 mb-6 max-w-md">
+                        Empowering creativity through shared knowledge. Discover insights, stories, and inspiration from the global creative community.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-gray-900 font-semibold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Design Trends</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Business</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Inspiration</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-gray-900 font-semibold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Write for Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Newsletter</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Events</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600">
+                <p>&copy; 2024 ProjectHub. Empowering creativity through shared knowledge.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog interaction data
+        let blogData = {
+            1: { likes: 42, comments: 8, shares: 15, liked: false },
+            2: { likes: 38, comments: 12, shares: 9, liked: false },
+            3: { likes: 55, comments: 6, shares: 22, liked: false },
+            4: { likes: 29, comments: 15, shares: 7, liked: false },
+            5: { likes: 33, comments: 9, shares: 12, liked: false },
+            6: { likes: 47, comments: 18, shares: 8, liked: false }
+        };
+
+        // Blog content data
+        let blogContent = {
+            1: {
+                title: "The Future of Design: AI-Powered Creative Tools",
+                author: "Sarah Chen",
+                date: "Dec 15, 2024",
+                readTime: "5 min read",
+                category: "Design Trends",
+                avatar: "SC",
+                gradient: "from-blue-400 to-purple-600",
+                tags: ["AI", "Design", "Technology", "Future", "Creative Tools"],
+                description: "Explore how artificial intelligence is revolutionizing the creative process and transforming the way designers work. From automated design suggestions to intelligent workflows, discover the tools that are shaping the future of creative work.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Artificial intelligence is fundamentally changing how we approach creative work. From automated design suggestions to intelligent color palette generation, AI tools are becoming indispensable partners in the creative process.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Current Landscape</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Today's AI-powered design tools can analyze thousands of design patterns, understand user preferences, and generate suggestions that would take human designers hours to conceptualize. Tools like Midjourney, DALL-E, and Figma's AI features are just the beginning.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">What's Coming Next</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        The next wave of AI design tools will be more contextually aware, understanding not just visual aesthetics but also user behavior, brand guidelines, and business objectives. We're moving toward AI that can create entire design systems, not just individual elements.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Embracing the Change</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Rather than replacing designers, AI is augmenting human creativity. The most successful designers of the future will be those who learn to collaborate effectively with AI tools, using them to explore more possibilities and iterate faster than ever before.
+                    </p>
+                `
+            },
+            2: {
+                title: "Building a Sustainable Creative Business in 2024",
+                author: "Mike Johnson",
+                date: "Dec 12, 2024",
+                readTime: "7 min read",
+                category: "Business",
+                avatar: "MJ",
+                gradient: "from-green-400 to-blue-600",
+                tags: ["Business", "Strategy", "Freelancing", "Entrepreneurship", "Sustainability"],
+                description: "Learn the essential strategies for creating a profitable and sustainable creative business. From pricing strategies to client relationships, discover how to build a thriving creative enterprise that stands the test of time.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Building a sustainable creative business requires more than just talent. It demands strategic thinking, financial planning, and a deep understanding of your market and clients.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Pricing Your Work Correctly</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        One of the biggest mistakes creative professionals make is underpricing their work. Your pricing should reflect not just the time spent on a project, but also your expertise, the value you provide, and your business costs.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Building Long-term Client Relationships</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Sustainable businesses are built on recurring relationships, not one-off projects. Focus on delivering exceptional value, maintaining clear communication, and always exceeding expectations.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Diversifying Your Revenue Streams</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Don't rely on a single source of income. Consider offering different services, creating digital products, teaching, or licensing your work. Multiple revenue streams provide stability and growth opportunities.
+                    </p>
+                `
+            },
+            3: {
+                title: "Mastering Color Theory for Digital Design",
+                author: "Emma Wilson",
+                date: "Dec 10, 2024",
+                readTime: "4 min read",
+                category: "Tutorial",
+                avatar: "EW",
+                gradient: "from-purple-400 to-pink-600",
+                tags: ["Color Theory", "Design", "Tutorial", "Digital Design", "Visual Communication"],
+                description: "A comprehensive guide to understanding and applying color theory in digital design. Learn how to create harmonious palettes, understand color psychology, and make your designs more impactful through strategic color choices.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Color theory is the foundation of effective visual communication. Understanding how colors work together can dramatically improve the impact and usability of your designs.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Color Wheel Basics</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Primary colors (red, blue, yellow) form the foundation. Secondary colors (green, orange, purple) are created by mixing primaries. Tertiary colors fill the gaps, creating the full spectrum we work with.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Creating Harmonious Palettes</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Complementary colors create vibrant contrast, while analogous colors provide harmony. Triadic schemes offer balance, and monochromatic palettes ensure cohesion. Choose based on the emotion you want to convey.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Digital Color Considerations</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Digital screens display colors differently than print. Always test your colors on various devices and consider accessibility guidelines. Use tools like Contrast Checker to ensure your color choices are inclusive.
+                    </p>
+                `
+            },
+            4: {
+                title: "Creative Burnout: Recognition and Recovery",
+                author: "David Kim",
+                date: "Dec 8, 2024",
+                readTime: "6 min read",
+                category: "Inspiration",
+                avatar: "DK",
+                gradient: "from-orange-400 to-red-600",
+                tags: ["Mental Health", "Career", "Wellness", "Creativity", "Work-Life Balance"],
+                description: "Understanding the signs of creative burnout and practical strategies for recovery. Learn how to maintain your creative energy, set healthy boundaries, and build sustainable work habits that protect your mental health.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Creative burnout is more common than we'd like to admit. Recognizing the signs early and taking proactive steps can help maintain both your mental health and creative output.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Recognizing the Signs</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Burnout often manifests as chronic exhaustion, loss of motivation, decreased creativity, and cynicism about your work. Physical symptoms like headaches and sleep issues are also common indicators.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Recovery Strategies</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Recovery requires intentional rest, setting boundaries, and reconnecting with what originally inspired you to create. Sometimes stepping away completely for a short period is necessary.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Prevention is Key</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Build sustainable work habits from the start. Regular breaks, diverse projects, continuous learning, and maintaining interests outside of work all contribute to long-term creative sustainability.
+                    </p>
+                `
+            },
+            5: {
+                title: "Web3 and the Future of Creative Ownership",
+                author: "Alex Lee",
+                date: "Dec 6, 2024",
+                readTime: "8 min read",
+                category: "Technology",
+                avatar: "AL",
+                gradient: "from-indigo-400 to-cyan-600",
+                tags: ["Web3", "NFT", "Blockchain", "Digital Ownership", "Creative Economy"],
+                description: "Exploring how blockchain technology is reshaping creative ownership and monetization. Discover new opportunities for creators in the Web3 ecosystem and understand the implications for intellectual property rights.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        Web3 technologies are creating new possibilities for creative ownership and monetization. Understanding these tools can open up new revenue streams and protect your intellectual property.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">NFTs and Digital Ownership</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Non-fungible tokens provide a way to establish provable ownership of digital assets. While the market has evolved, the underlying technology continues to offer interesting possibilities for creators.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Decentralized Platforms</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        New platforms are emerging that give creators more control over their work and revenue. These platforms often offer better terms than traditional social media or marketplace platforms.
+                    </p>
+                `
+            },
+            6: {
+                title: "From Freelancer to Creative Director: My Journey",
+                author: "Jessica Davis",
+                date: "Dec 4, 2024",
+                readTime: "6 min read",
+                category: "Career",
+                avatar: "JD",
+                gradient: "from-pink-400 to-rose-600",
+                tags: ["Career", "Leadership", "Growth", "Management", "Creative Direction"],
+                description: "A personal story of career growth and the lessons learned along the way. Discover the challenges and rewards of transitioning from individual contributor to creative leader, and learn practical strategies for career advancement.",
+                content: `
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        The transition from freelancer to creative director isn't just about getting a new title. It's about developing leadership skills, strategic thinking, and learning to guide teams toward creative excellence.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Building Leadership Skills</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Leadership in creative fields requires balancing creative vision with practical constraints. You need to inspire your team while also managing budgets, timelines, and client expectations.
+                    </p>
+                    
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Challenges</h2>
+                    <p class="text-gray-700 leading-relaxed mb-6">
+                        Moving from individual contributor to manager means less hands-on creative work and more strategic thinking. This transition can be difficult for creatives who are passionate about making things.
+                    </p>
+                `
+            }
+        };
+
+        // Comments data
+        let commentsData = {
+            1: [
+                { author: "Sarah Chen", time: "2 hours ago", text: "This is incredibly insightful! The future of design is definitely heading in this direction.", avatar: "SC" },
+                { author: "Mike Johnson", time: "4 hours ago", text: "Great article! I've been experimenting with similar concepts in my projects.", avatar: "MJ" }
+            ],
+            2: [
+                { author: "Emma Wilson", time: "1 hour ago", text: "Love the practical tips! Implementing these strategies right away.", avatar: "EW" },
+                { author: "David Kim", time: "3 hours ago", text: "The case studies really help illustrate the points. Thanks for sharing!", avatar: "DK" }
+            ],
+            3: [
+                { author: "Alex Lee", time: "30 minutes ago", text: "Color theory is so fundamental yet often overlooked. Great breakdown!", avatar: "AL" }
+            ],
+            4: [
+                { author: "Jessica Davis", time: "1 hour ago", text: "Thank you for addressing this important topic. Burnout is real and needs more discussion.", avatar: "JD" },
+                { author: "Sarah Chen", time: "3 hours ago", text: "The prevention strategies are gold. Wish I had read this earlier in my career.", avatar: "SC" }
+            ]
+        };
+
+        // Open blog detail modal
+        function openBlogDetail(blogId) {
+            const blog = blogContent[blogId];
+            const blogStats = blogData[blogId];
+            
+            if (!blog) return;
+            
+            const modal = document.getElementById('blog-detail-modal');
+            const content = document.getElementById('blog-detail-content');
+            
+            content.innerHTML = `
+                <div class="relative">
+                    <!-- Header Image -->
+                    <div class="aspect-video bg-gradient-to-br ${blog.gradient} relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/30"></div>
+                        <button onclick="closeBlogDetail()" class="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="p-8">
+                        <!-- Blog Info Section -->
+                        <div class="bg-gray-50 rounded-xl p-6 mb-8">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">Blog Information</h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span class="text-gray-700"><strong>Published:</strong> ${blog.date}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        <span class="text-gray-700"><strong>Reading Time:</strong> ${blog.readTime}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                        </svg>
+                                        <span class="text-gray-700"><strong>Category:</strong> ${blog.category}</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        <span class="text-gray-700"><strong>Author:</strong> ${blog.author}</span>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <svg class="w-5 h-5 text-gray-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                                        </svg>
+                                        <div>
+                                            <strong class="text-gray-700">Tags:</strong>
+                                            <div class="flex flex-wrap gap-2 mt-1">
+                                                ${blog.tags ? blog.tags.map(tag => `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">${tag}</span>`).join('') : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Title -->
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+                            ${blog.title}
+                        </h1>
+                        
+                        <!-- Description -->
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
+                            <p class="text-lg text-gray-700 leading-relaxed italic">
+                                ${blog.description || 'Discover insights and practical knowledge that will enhance your creative journey and professional growth.'}
+                            </p>
+                        </div>
+                        
+                        <!-- Article Content -->
+                        <div class="prose prose-lg max-w-none mb-8">
+                            ${blog.content}
+                        </div>
+                        
+                        <!-- Interaction Buttons -->
+                        <div class="border-t border-gray-200 pt-6 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-6">
+                                    <button onclick="toggleLike(${blogId})" class="like-btn flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors ${blogStats.liked ? 'liked' : ''}">
+                                        <svg class="w-6 h-6" fill="${blogStats.liked ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                        </svg>
+                                        <span class="like-count font-medium">${blogStats.likes}</span>
+                                        <span class="text-sm">Likes</span>
+                                    </button>
+                                    
+                                    <button onclick="toggleComments(${blogId})" class="comment-btn flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors px-3 py-2 rounded-lg">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        <span class="comment-count font-medium">${blogStats.comments}</span>
+                                        <span class="text-sm">Comments</span>
+                                    </button>
+                                    
+                                    <button onclick="shareBlog(${blogId})" class="flex items-center space-x-2 text-gray-500 hover:text-green-500 transition-colors">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                        </svg>
+                                        <span class="share-count font-medium">${blogStats.shares}</span>
+                                        <span class="text-sm">Shares</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comments Section -->
+                        <div id="comments-${blogId}" class="border-t border-gray-200 pt-6" style="display: none;">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">Comments</h3>
+                            
+                            <div id="comments-list-${blogId}" class="mb-6">
+                                <!-- Comments will be loaded here -->
+                            </div>
+                            
+                            <div class="flex space-x-4">
+                                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white font-semibold">
+                                    YO
+                                </div>
+                                <div class="flex-1 flex space-x-3">
+                                    <input 
+                                        type="text" 
+                                        id="comment-input-${blogId}"
+                                        placeholder="Add a comment..."
+                                        class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500"
+                                        onkeypress="if(event.key==='Enter') addComment(${blogId})"
+                                    >
+                                    <button onclick="addComment(${blogId})" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium transition-colors">
+                                        Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close blog detail modal
+        function closeBlogDetail() {
+            document.getElementById('blog-detail-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Like functionality
+        function toggleLike(blogId) {
+            const blog = blogData[blogId];
+            const likeBtn = document.querySelector(`#blog-detail-modal .like-btn`);
+            const likeCount = document.querySelector(`#blog-detail-modal .like-count`);
+            
+            if (blog.liked) {
+                blog.likes--;
+                blog.liked = false;
+                likeBtn.classList.remove('liked');
+                likeBtn.querySelector('svg').setAttribute('fill', 'none');
+            } else {
+                blog.likes++;
+                blog.liked = true;
+                likeBtn.classList.add('liked');
+                likeBtn.querySelector('svg').setAttribute('fill', 'currentColor');
+                
+                // Add animation
+                likeBtn.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    likeBtn.style.transform = 'scale(1)';
+                }, 200);
+            }
+            
+            likeCount.textContent = blog.likes;
+            showNotification(blog.liked ? 'Liked!' : 'Unliked!');
+        }
+
+        // Comment functionality
+        function toggleComments(blogId) {
+            const commentsSection = document.getElementById(`comments-${blogId}`);
+            const commentBtn = document.querySelector(`[data-blog-id="${blogId}"] .comment-btn`);
+            
+            if (commentsSection.style.display === 'none' || !commentsSection.style.display) {
+                commentsSection.style.display = 'block';
+                commentBtn.classList.add('active');
+                loadComments(blogId);
+            } else {
+                commentsSection.style.display = 'none';
+                commentBtn.classList.remove('active');
+            }
+        }
+
+        // Load comments
+        function loadComments(blogId) {
+            const commentsContainer = document.getElementById(`comments-list-${blogId}`);
+            const comments = commentsData[blogId] || [];
+            
+            commentsContainer.innerHTML = comments.map(comment => `
+                <div class="flex space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                        ${comment.avatar}
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <div class="flex items-center space-x-2 mb-1">
+                                <span class="font-semibold text-sm">${comment.author}</span>
+                                <span class="text-xs text-gray-500">${comment.time}</span>
+                            </div>
+                            <p class="text-sm text-gray-700">${comment.text}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add comment
+        function addComment(blogId) {
+            const input = document.getElementById(`comment-input-${blogId}`);
+            const text = input.value.trim();
+            
+            if (text) {
+                if (!commentsData[blogId]) {
+                    commentsData[blogId] = [];
+                }
+                
+                commentsData[blogId].unshift({
+                    author: "You",
+                    time: "Just now",
+                    text: text,
+                    avatar: "YO"
+                });
+                
+                blogData[blogId].comments++;
+                document.querySelector(`[data-blog-id="${blogId}"] .comment-count`).textContent = blogData[blogId].comments;
+                
+                input.value = '';
+                loadComments(blogId);
+            }
+        }
+
+        // Share functionality
+        function shareBlog(blogId) {
+            const blog = blogData[blogId];
+            blog.shares++;
+            document.querySelector(`[data-blog-id="${blogId}"] .share-count`).textContent = blog.shares;
+            
+            // Simple share simulation
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this blog post',
+                    text: 'Found this interesting article on ProjectHub',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showNotification('Link copied to clipboard!');
+                });
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(full)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Scroll to blogs section
+        function scrollToBlogs() {
+            document.getElementById('blogs-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Show categories modal
+        function showCategories() {
+            document.getElementById('categories-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide categories modal
+        function hideCategories() {
+            document.getElementById('categories-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Show write article form
+        function showWriteForm() {
+            document.getElementById('write-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide write article form
+        function hideWriteForm() {
+            document.getElementById('write-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Filter blogs by category
+        function filterByCategory(category) {
+            hideCategories();
+            showNotification(`Showing ${category} articles`);
+            // In a real app, this would filter the blog posts
+        }
+
+        // Submit article
+        function submitArticle(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const article = {
+                title: formData.get('title'),
+                category: formData.get('category'),
+                tags: formData.get('tags'),
+                content: formData.get('content'),
+                coverImage: formData.get('coverImage')
+            };
+            
+            // Validate form
+            if (!article.title || !article.content) {
+                showNotification('Please fill in all required fields');
+                return;
+            }
+            
+            // Simulate article submission
+            showNotification('Article submitted successfully!');
+            hideWriteForm();
+            event.target.reset();
+        }
+
+        // Preview article
+        function previewArticle() {
+            const title = document.getElementById('article-title').value;
+            const content = document.getElementById('article-content').value;
+            
+            if (!title || !content) {
+                showNotification('Please add title and content to preview');
+                return;
+            }
+            
+            const previewWindow = window.open('', '_blank');
+            previewWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Preview: ${title}</title>
+                        <style>
+                            body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+                            h1 { color: #1f2937; margin-bottom: 20px; }
+                            .content { line-height: 1.6; color: #374151; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${title}</h1>
+                        <div class="content">${content.replace(/\n/g, '<br>')}</div>
+                    </body>
+                </html>
+            `);
+        }
+
+        // Search functionality with real filtering
+        let allBlogs = [
+            { id: 1, title: "The Future of Design: AI-Powered Creative Tools", author: "Sarah Chen", category: "Design Trends", tags: ["AI", "Design", "Technology"], readTime: "5 min read", date: "Dec 15, 2024" },
+            { id: 2, title: "Building a Sustainable Creative Business in 2024", author: "Mike Johnson", category: "Business", tags: ["Business", "Strategy", "Freelancing"], readTime: "7 min read", date: "Dec 12, 2024" },
+            { id: 3, title: "Mastering Color Theory for Digital Design", author: "Emma Wilson", category: "Tutorial", tags: ["Color", "Design", "Tutorial"], readTime: "4 min read", date: "Dec 10, 2024" },
+            { id: 4, title: "Creative Burnout: Recognition and Recovery", author: "David Kim", category: "Inspiration", tags: ["Mental Health", "Career", "Wellness"], readTime: "6 min read", date: "Dec 8, 2024" },
+            { id: 5, title: "Web3 and the Future of Creative Ownership", author: "Alex Lee", category: "Technology", tags: ["Web3", "NFT", "Blockchain"], readTime: "8 min read", date: "Dec 6, 2024" },
+            { id: 6, title: "From Freelancer to Creative Director: My Journey", author: "Jessica Davis", category: "Career", tags: ["Career", "Leadership", "Growth"], readTime: "6 min read", date: "Dec 4, 2024" },
+            { id: 7, title: "Typography Trends That Will Define 2024", author: "Robert Chen", category: "Design Trends", tags: ["Typography", "Trends", "Design"], readTime: "5 min read", date: "Dec 2, 2024" },
+            { id: 8, title: "Building Accessible Design Systems", author: "Maria Garcia", category: "Tutorial", tags: ["Accessibility", "Design Systems", "UX"], readTime: "9 min read", date: "Nov 30, 2024" },
+            { id: 9, title: "The Psychology of Color in Branding", author: "James Wilson", category: "Business", tags: ["Branding", "Psychology", "Color"], readTime: "7 min read", date: "Nov 28, 2024" }
+        ];
+
+        let filteredBlogs = [...allBlogs];
+        let currentPage = 1;
+        const blogsPerPage = 6;
+
+        function showSearchDropdown() {
+            document.getElementById('search-dropdown').classList.remove('hidden');
+        }
+
+        function hideSearchDropdown() {
+            document.getElementById('search-dropdown').classList.add('hidden');
+        }
+
+        function toggleSearchFilters() {
+            const filters = document.getElementById('search-filters');
+            filters.classList.toggle('hidden');
+        }
+
+        function handleSearch(event) {
+            const query = event.target.value;
+            if (event.key === 'Enter' && query.trim()) {
+                performSearch(query);
+            } else if (query.trim() === '') {
+                // Reset to show all blogs when search is cleared
+                filteredBlogs = [...allBlogs];
+                currentPage = 1;
+                renderBlogs();
+                updatePagination();
+            }
+        }
+
+        function quickSearch(query) {
+            document.getElementById('search-input').value = query;
+            performSearch(query);
+            hideSearchDropdown();
+        }
+
+        function performSearch(query) {
+            const searchTerm = query.toLowerCase();
+            filteredBlogs = allBlogs.filter(blog => 
+                blog.title.toLowerCase().includes(searchTerm) ||
+                blog.author.toLowerCase().includes(searchTerm) ||
+                blog.category.toLowerCase().includes(searchTerm) ||
+                blog.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+            );
+            
+            currentPage = 1;
+            renderBlogs();
+            updatePagination();
+            hideSearchDropdown();
+            
+            if (filteredBlogs.length === 0) {
+                showNotification(`No results found for "${query}"`);
+            } else {
+                showNotification(`Found ${filteredBlogs.length} articles for "${query}"`);
+            }
+        }
+
+        function applyFilters() {
+            const category = document.querySelector('select[name="category"]').value;
+            const readingTime = document.querySelector('select[name="readingTime"]').value;
+            const sortBy = document.querySelector('select[name="sortBy"]').value;
+            
+            let filtered = [...allBlogs];
+            
+            // Apply category filter
+            if (category) {
+                filtered = filtered.filter(blog => blog.category.toLowerCase().replace(' ', '-') === category);
+            }
+            
+            // Apply reading time filter
+            if (readingTime) {
+                filtered = filtered.filter(blog => {
+                    const minutes = parseInt(blog.readTime);
+                    switch(readingTime) {
+                        case 'short': return minutes < 5;
+                        case 'medium': return minutes >= 5 && minutes <= 10;
+                        case 'long': return minutes > 10;
+                        default: return true;
+                    }
+                });
+            }
+            
+            // Apply sorting
+            if (sortBy === 'popular') {
+                filtered.sort((a, b) => (blogData[b.id]?.likes || 0) - (blogData[a.id]?.likes || 0));
+            } else if (sortBy === 'trending') {
+                filtered.sort((a, b) => (blogData[b.id]?.shares || 0) - (blogData[a.id]?.shares || 0));
+            }
+            
+            filteredBlogs = filtered;
+            currentPage = 1;
+            renderBlogs();
+            updatePagination();
+            
+            showNotification(`Applied filters - ${filtered.length} articles found`);
+        }
+
+        function openFeaturedStory() {
+            showNotification('Opening featured story...');
+            // In a real app, this would open the featured story
+        }
+
+        // Render blogs function
+        function renderBlogs() {
+            const container = document.getElementById('blogs-container');
+            const startIndex = (currentPage - 1) * blogsPerPage;
+            const endIndex = startIndex + blogsPerPage;
+            const blogsToShow = filteredBlogs.slice(startIndex, endIndex);
+            
+            const gradients = [
+                'from-blue-400 to-purple-600',
+                'from-green-400 to-blue-600', 
+                'from-purple-400 to-pink-600',
+                'from-orange-400 to-red-600',
+                'from-indigo-400 to-cyan-600',
+                'from-pink-400 to-rose-600',
+                'from-yellow-400 to-orange-600',
+                'from-teal-400 to-blue-600',
+                'from-red-400 to-pink-600'
+            ];
+
+            const categoryIcons = {
+                'Design Trends': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg>',
+                'Business': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>',
+                'Tutorial': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>',
+                'Inspiration': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>',
+                'Technology': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>',
+                'Career': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0V4a2 2 0 00-2-2H10a2 2 0 00-2 2v2"/></svg>'
+            };
+            
+            container.innerHTML = blogsToShow.map((blog, index) => {
+                const gradient = gradients[blog.id % gradients.length];
+                const stats = blogData[blog.id] || { likes: Math.floor(Math.random() * 50) + 10, comments: Math.floor(Math.random() * 20) + 1 };
+                const categoryIcon = categoryIcons[blog.category] || categoryIcons['Design Trends'];
+                
+                return `
+                    <article onclick="openBlogDetail(${blog.id})" class="blog-card bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer">
+                        <div class="aspect-video bg-gradient-to-br ${gradient} relative overflow-hidden">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-white/90 text-gray-900 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+                                    ${categoryIcon}
+                                    <span>${blog.category}</span>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                                        ${blog.author.split(' ').map(n => n[0]).join('')}
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-gray-900">${blog.author}</div>
+                                        <div class="text-xs text-gray-500">${blog.date}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-1 text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium">${blog.readTime}</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-lg font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
+                                ${blog.title}
+                            </h3>
+                            
+                            <div class="flex flex-wrap gap-1 mb-4">
+                                ${blog.tags.slice(0, 3).map(tag => `
+                                    <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs">${tag}</span>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-1">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                        </svg>
+                                        <span>${stats.likes}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        <span>${stats.comments}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Update pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage - 1})" 
+                        class="px-3 py-2 rounded-lg border border-gray-300 text-gray-500 hover:text-gray-700 hover:border-gray-400 transition-colors ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}"
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+            `;
+            
+            // Page numbers
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                paginationHTML += `<button onclick="changePage(1)" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">1</button>`;
+                if (startPage > 2) {
+                    paginationHTML += `<span class="px-2 text-gray-500">...</span>`;
+                }
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <button onclick="changePage(${i})" 
+                            class="px-3 py-2 rounded-lg border transition-colors ${i === currentPage 
+                                ? 'bg-blue-600 text-white border-blue-600' 
+                                : 'border-gray-300 text-gray-700 hover:bg-gray-50'}">${i}</button>
+                `;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHTML += `<span class="px-2 text-gray-500">...</span>`;
+                }
+                paginationHTML += `<button onclick="changePage(${totalPages})" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">${totalPages}</button>`;
+            }
+            
+            // Next button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage + 1})" 
+                        class="px-3 py-2 rounded-lg border border-gray-300 text-gray-500 hover:text-gray-700 hover:border-gray-400 transition-colors ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}"
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // Change page function
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderBlogs();
+            updatePagination();
+            
+            // Scroll to blogs section
+            document.getElementById('blogs-section').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Clear filters function
+        function clearFilters() {
+            document.querySelector('select[name="category"]').value = '';
+            document.querySelector('select[name="readingTime"]').value = '';
+            document.querySelector('select[name="sortBy"]').value = 'newest';
+            document.getElementById('search-input').value = '';
+            
+            filteredBlogs = [...allBlogs];
+            currentPage = 1;
+            renderBlogs();
+            updatePagination();
+            
+            showNotification('Filters cleared');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render initial blogs and pagination
+            renderBlogs();
+            updatePagination();
+            
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                observer.observe(el);
+            });
+
+            // Close modals when clicking outside
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal-backdrop')) {
+                    hideCategories();
+                    hideWriteForm();
+                    closeBlogDetail();
+                }
+                
+                // Close search dropdown when clicking outside
+                if (!e.target.closest('#search-input') && !e.target.closest('#search-dropdown')) {
+                    hideSearchDropdown();
+                }
+            });
+
+            // Handle escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideCategories();
+                    hideWriteForm();
+                    closeBlogDetail();
+                    hideSearchDropdown();
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993eedc48418e2e4',t:'MTc2MTM2NjEwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

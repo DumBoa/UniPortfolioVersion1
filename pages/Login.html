@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniportfolio - Đăng nhập</title>
+    <link rel="stylesheet" href="../assets/css/login.css">
+    <link rel="stylesheet" href="../assets/js/Gtranslate.js">
+    <script src="https://cdn.jsdelivr.net/npm/mo-js@1.7.0/build/mo.min.js"></script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="gtranslate_wrapper"></div>
+    <header class="header">
+        <div class="header-left">
+            <span class="logo">Uniportfolio</span>
+
+        </div>
+        <div class="header-right">
+
+            <a href="#" class="sign-in-link">Sign in</a>
+            <a href="../pages/index.html" class="get-started-btn">Get Started</a>
+        </div>
+    </header>
+
+    <main class="login-container">
+
+        <h1 class="main-title">
+            <span class="title-highlight">Login</span> to Your
+            <br>
+            Account
+        </h1>
+
+        <p class="subtitle">
+            Uncover the Untapped Potential of Your Growth to Connect with Clients
+        </p>
+
+        <div class="login-methods">
+            <div class="form-login">
+  <input type="text" placeholder="Phone / Email / ArtistID">
+  <input type="password" placeholder="Passcode">
+  <button class="login-btn">
+    Login to Your Account <span class="arrow-right">→</span>
+  </button>
+</div>
+
+        </div>
+
+        <a href="#" class="forgot-passcode">Forgot Pasword?</a>
+    </main>
+
+    <footer class="footer">
+        <a href="#">Privacy Policy</a>
+        <span class="separator-dot">|</span>
+        <a href="#">Terms & Conditions</a>
+        <span class="copyrights">Copyrights @Uniportfolio 2025</span>
+    </footer>
+</body>
+<script>
+    document.querySelector(".login-btn").addEventListener("click", function () {
+        window.location.href = "../pages/index.html";
+    });
+    function createClickBurst(e) {
+    const container = document.createElement('div');
+    container.className = 'click-effect-container';
+
+    container.style.left = `${e.pageX - 25}px`;
+    container.style.top = `${e.pageY - 25}px`;
+
+    document.body.appendChild(container);
+
+    const PARTICLE_COUNT = 12;
+    const colors = ['#0066FF', '#3399FF', '#FFD700', '#FFFFFF', '#8A2BE2', '#FC46AD'];
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'click-effect-particle';
+
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.width = '10px';
+        particle.style.height = '10px';
+        particle.style.transform = 'translate(15px, 15px) scale(1)';
+        particle.style.opacity = '1';
+
+        container.appendChild(particle);
+
+        const angle = (360 / PARTICLE_COUNT) * i; // Góc bay ra
+        const radius = 50 + Math.random() * 40;   // Khoảng cách bay ra
+        const x = radius * Math.cos(angle * Math.PI / 180); // Tọa độ x cuối cùng
+        const y = radius * Math.sin(angle * Math.PI / 180); // Tọa độ y cuối cùng
+
+        setTimeout(() => {
+            // Style cuối cùng của mảnh vỡ (sau khi đã bay ra)
+            particle.style.transform = `translate(${x}px, ${y}px) scale(0)`;
+            particle.style.opacity = '0';
+        }, 10);
+    }
+    setTimeout(() => {
+        container.remove();
+    }, 700);
+}
+
+// Gắn hàm xử lý sự kiện vào toàn bộ trang
+document.addEventListener('click', createClickBurst);
+    window.gtranslateSettings = {"default_language":"en","languages":["en","vi"],"wrapper_selector":".gtranslate_wrapper"}
+</script>
+
+</html>
