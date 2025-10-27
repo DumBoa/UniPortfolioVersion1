@@ -1,0 +1,294 @@
+/* Reset cơ bản và thiết lập font chữ */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* Nền trắng */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo footer ở dưới cùng */
+}
+
+/* -------------------- Header -------------------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    font-size: 16px;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+}
+
+.support-email {
+    color: #888;
+    margin-left: 5px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.language-selector span {
+    margin-right: 5px;
+}
+
+.sign-in-link {
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+}
+
+.get-started-btn {
+    background-color: #ffe873; /* Màu vàng nhạt */
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* -------------------- Main Content -------------------- */
+.login-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.brand-explainer {
+    color: #6a6a6a;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.arrow-icon {
+    margin-left: 5px;
+    color: #000;
+    font-weight: bold;
+}
+
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400; /* Nhẹ hơn so với font thường */
+    font-size: 56px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.title-highlight {
+    position: relative;
+}
+
+
+
+
+.subtitle {
+    color: #6a6a6a;
+    font-size: 18px;
+    margin-bottom: 40px;
+    max-width: 500px;
+}
+
+.login-methods {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+
+.form-login input {
+    width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fcfcfc;
+}
+/* Trong phần "Main Content" */
+.login-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+  width: 300px; /* Giữ nguyên chiều rộng giống input */
+  /* BỎ margin: 0 auto; - để container flex tự căn giữa */
+}
+
+/* Đảm bảo container `.form-login` có thiết lập này: */
+.form-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Đảm bảo các phần tử con được căn giữa */
+  gap: 15px;
+}
+
+
+.arrow-right {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.separator {
+    font-size: 30px;
+    color: #ddd;
+    font-weight: 100;
+}
+
+/* Social Login */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-btn {
+    width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: border-color 0.3s;
+}
+
+.social-btn:hover {
+    border-color: #aaa;
+}
+
+.icon {
+    font-weight: bold;
+    font-size: 18px;
+    /* Điều chỉnh icon giả lập (thực tế nên dùng SVG hoặc Font Icon) */
+}
+
+.gmail-btn .icon { color: #db4437; } /* Google Red */
+.facebook-btn .icon { color: #4267B2; } /* Facebook Blue */
+.apple-btn .icon { color: #000; } /* Apple Black */
+
+.forgot-passcode {
+    text-decoration: none;
+    color: #6a6a6a;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+
+/* -------------------- Footer -------------------- */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: auto; /* Đẩy footer xuống dưới cùng */
+    font-size: 14px;
+    color: #6a6a6a;
+    gap: 10px;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+}
+
+.footer a {
+    text-decoration: none;
+    color: #6a6a6a;
+    margin: 0 5px;
+}
+
+.separator-dot {
+    color: #ddd;
+}
+
+.copyrights {
+    margin-left: 20px;
+    color: #aaa;
+}
+
+/* -------------------- Media Queries cho responsive cơ bản -------------------- */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .header-right {
+        gap: 10px;
+    }
+
+    .main-title {
+        font-size: 40px;
+    }
+
+    .login-methods {
+        flex-direction: column; /* Xếp form và social xuống dòng */
+        gap: 30px;
+    }
+    
+    .separator {
+        display: none; /* Ẩn dấu "/" khi xếp dọc */
+    }
+
+    .form-login input, .social-btn {
+        width: 100%;
+        max-width: 350px; /* Giới hạn chiều rộng trên mobile */
+    }
+}
+/* ==========================================================================
+         HIỆU ỨNG CLICK CHUỘT
+        ========================================================================== */
+        /* Container cho các hạt hiệu ứng */
+        .click-effect-container {
+            position: absolute;
+            z-index: 9999;
+            pointer-events: none;
+            /* Cho phép click "xuyên qua" */
+        }
+
+        /* Style cho từng hạt hiệu ứng */
+        .click-effect-particle {
+            position: absolute;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(0.1, 0.7, 0.5, 1), opacity 0.6s linear;
+        }

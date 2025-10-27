@@ -1,0 +1,644 @@
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* --- CSS Variables --- */
+:root {
+    --primary-color: #2563EB;
+    --secondary-color: #F3F4F6;
+    --text-color: #4B5563;
+    --heading-color: #111827;
+    --border-color: #E5E7EB;
+    --white-color: #FFFFFF;
+    --light-bg-color: #F9FAFB;
+}
+
+/* --- Reset & Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Header (adapted for nav with id="navbar") --- */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Hero Section --- */
+.hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    text-align: center;
+    background-color: var(--light-bg-color);
+    background-image: url('assets/images/hero-background.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.hero h1 {
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 12px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 24px;
+    color: var(--text-color);
+}
+
+.hero-tags {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.hero-tags .tag {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.btn {
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.btn-primary:hover {
+    background-color: #1D4ED8;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: var(--white-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+/* --- Main Content --- */
+.main-content {
+    padding-top: 100px;
+}
+
+.section {
+    margin-bottom: 100px;
+}
+
+.section-title {
+    font-size: 32px;
+    color: var(--heading-color);
+    margin-bottom: 16px;
+}
+
+/* Project Overview */
+.project-overview .overview-text {
+    max-width: 800px;
+}
+.project-overview .overview-text p {
+    font-size: 16px;
+    line-height: 1.7;
+}
+.project-overview .overview-text p:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+/* Final Deliverables */
+.gallery-section .section-title {
+     margin-bottom: 40px;
+}
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.gallery-item {
+    text-align: left;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.gallery-item p {
+    font-weight: 500;
+    color: var(--heading-color);
+    font-size: 15px;
+}
+
+/* Project Development Journey */
+.development-journey {
+    background-color: var(--light-bg-color);
+    padding: 100px 0;
+    margin-bottom: 0;
+}
+
+.journey-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: flex-start;
+}
+
+.accordion {
+    flex: 1;
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--border-color);
+    padding: 24px 0;
+}
+.accordion-item:first-child {
+    padding-top: 0;
+}
+.accordion-item:last-child {
+    border-bottom: none;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+
+.accordion-header i.icon {
+    transition: transform 0.3s ease;
+}
+
+.accordion-item.active .accordion-header i.icon {
+    transform: rotate(180deg);
+}
+
+.accordion-item.active .accordion-header {
+    color: var(--primary-color);
+}
+
+.accordion-header .fas {
+    margin-right: 16px;
+    color: #9CA3AF;
+}
+
+.accordion-item.active .accordion-header .fas {
+    color: var(--primary-color);
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.accordion-content {
+    padding: 16px 0 0 38px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-color);
+}
+
+.journey-image {
+    position: sticky;
+    top: 120px;
+}
+
+.journey-image img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* Community Feedback */
+.feedback-section {
+    padding-top: 100px;
+}
+
+.comment-input-area {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+    align-items: flex-start;
+}
+
+.comment-input-area .avatar {
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+}
+
+.comment-form {
+    flex: 1;
+}
+
+.comment-form textarea {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    min-height: 50px;
+    resize: vertical;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.comment-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.comment-list .comment {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.comment .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.comment-author {
+    font-weight: 600;
+    color: var(--heading-color);
+    font-size: 15px;
+}
+
+.comment-date {
+    font-size: 13px;
+    color: #9CA3AF;
+}
+
+.comment-text {
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.comment-actions {
+    margin-top: 8px;
+}
+
+.comment-actions a {
+    color: #9CA3AF;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.comment-actions a i {
+    margin-right: 5px;
+}
+
+.comment-actions a:hover {
+    color: var(--primary-color);
+}
+
+/* Explore More Projects */
+.explore-section {
+    background-color: var(--light-bg-color);
+    padding: 100px 0;
+}
+
+.explore-section .section-title {
+    margin-bottom: 40px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.project-card {
+    background-color: var(--white-color);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-card-content {
+    padding: 20px;
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.project-card-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+
+.project-card .tag {
+    background-color: #E0E7FF;
+    color: #3730A3;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.project-card p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.project-card a.view-project {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.project-card a.view-project i {
+    transition: transform 0.3s ease;
+    margin-left: 4px;
+}
+
+.project-card a.view-project:hover i {
+    transform: translateX(4px);
+}
+
+/* --- Footer --- */
+.footer {
+    padding: 40px 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    padding-top: 40px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.social-icons {
+    display: flex;
+    gap: 24px;
+}
+.social-icons a {
+    color: #9CA3AF;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    color: var(--primary-color);
+}
+
+/* Menu-specific styles adapted to match variables */
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Menu item click effects */
+.menu-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.menu-item:active::before {
+    left: 100%;
+}
+
+.menu-item:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Ripple effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Button press animation */
+.btn-press {
+    transition: all 0.1s ease;
+}
+
+.btn-press:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Glow effect on hover */
+.glow-hover {
+    transition: all 0.3s ease;
+}
+
+.glow-hover:hover {
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+}
+
+.mobile-menu {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+    visibility: hidden; /* Ẩn hoàn toàn ban đầu */
+}
+
+.mobile-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible; /* Hiện content */
+    height: auto; /* Để content tự mở rộng */
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--heading-color);
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Sticky nav effect on scroll (for #navbar when scrolling) */
+#navbar.nav-sticky {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* ==========================================================================
+         HIỆU ỨNG CLICK CHUỘT
+        ========================================================================== */
+        /* Container cho các hạt hiệu ứng */
+        .click-effect-container {
+            position: absolute;
+            z-index: 9999;
+            pointer-events: none;
+            /* Cho phép click "xuyên qua" */
+        }
+
+        /* Style cho từng hạt hiệu ứng */
+        .click-effect-particle {
+            position: absolute;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(0.1, 0.7, 0.5, 1), opacity 0.6s linear;
+        }
