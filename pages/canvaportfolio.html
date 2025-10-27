@@ -2611,14 +2611,527 @@ function openPreview() {
                     ]
                 },
                 {
-                    name: 'Landing Page',
-                    description: 'Template cho landing page sản phẩm',
-                    blocks: [
-                        { type: 'text', x: 100, y: 100, w: 1000, h: 120, props: { content: 'Sản Phẩm Tuyệt Vời', fontSize: 56, fontWeight: 'bold', textAlign: 'center' } },
-                        { type: 'text', x: 200, y: 240, w: 800, h: 80, props: { content: 'Mô tả ngắn gọn về sản phẩm', fontSize: 20, textAlign: 'center', color: '#666666' } },
-                        { type: 'image', x: 300, y: 350, w: 600, h: 300, props: { alt: 'Product Image' } }
-                    ]
-                },
+"name": "Landing Page",
+"description": "Template cho landing page sản phẩm dựa trên embed HTML",
+"blocks": [
+// Navbar
+{
+"type": "text",
+"x": 20,
+"y": 20,
+"w": 100,
+"h": 30,
+"props": {
+"content": "Brand",
+"fontSize": 20,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 900,
+"y": 20,
+"w": 280,
+"h": 30,
+"props": {
+"content": "Home | Tính năng | Giá | FAQ | Liên hệ",
+"fontSize": 15,
+"color": "#0f172a",
+"textAlign": "right"
+}
+},
+// Hero Section
+{
+"type": "text",
+"x": 20,
+"y": 80,
+"w": 560,
+"h": 100,
+"props": {
+"content": "Sản Phẩm Tuyệt Vời Cho Cuộc Sống Hiện Đại",
+"fontSize": 44,
+"fontWeight": "800",
+"lineHeight": 1.05,
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 200,
+"w": 560,
+"h": 60,
+"props": {
+"content": "Giải pháp đơn giản, tối ưu chi phí, tăng hiệu suất cho người dùng và doanh nghiệp.",
+"fontSize": 18,
+"color": "#475569",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 280,
+"w": 200,
+"h": 40,
+"props": {
+"content": "Dùng thử miễn phí",
+"fontSize": 16,
+"fontWeight": "600",
+"backgroundColor": "#0066ff",
+"color": "#fff",
+"textAlign": "center",
+"padding": "12px 18px",
+"borderRadius": "10px"
+}
+},
+{
+"type": "text",
+"x": 240,
+"y": 280,
+"w": 150,
+"h": 40,
+"props": {
+"content": "Xem demo",
+"fontSize": 16,
+"color": "#0b1220",
+"textAlign": "center",
+"border": "1px solid #cbd5e1",
+"padding": "12px 18px",
+"borderRadius": "10px"
+}
+},
+{
+"type": "image",
+"x": 600,
+"y": 80,
+"w": 360,
+"h": 360,
+"props": {
+"src": "",
+"alt": "Product Mockup",
+"objectFit": "cover",
+"borderRadius": "20px",
+"backgroundColor": "#eef6ff",
+"boxShadow": "0 20px 40px rgba(2,6,23,0.12)"
+}
+},
+// Features Section
+{
+"type": "text",
+"x": 20,
+"y": 500,
+"w": 220,
+"h": 30,
+"props": {
+"content": "Tốc độ cao",
+"fontSize": 18,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 530,
+"w": 220,
+"h": 40,
+"props": {
+"content": "Tải nhanh, phản hồi tức thì.",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 260,
+"y": 500,
+"w": 220,
+"h": 30,
+"props": {
+"content": "Bảo mật",
+"fontSize": 18,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 260,
+"y": 530,
+"w": 220,
+"h": 40,
+"props": {
+"content": "Chuẩn mã hóa cấp doanh nghiệp.",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 500,
+"y": 500,
+"w": 220,
+"h": 30,
+"props": {
+"content": "Hỗ trợ 24/7",
+"fontSize": 18,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 500,
+"y": 530,
+"w": 220,
+"h": 40,
+"props": {
+"content": "Đội ngũ luôn sẵn sàng hỗ trợ bạn.",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+// Testimonial
+{
+"type": "text",
+"x": 20,
+"y": 600,
+"w": 400,
+"h": 20,
+"props": {
+"content": "Minh, Founder",
+"fontSize": 16,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 620,
+"w": 400,
+"h": 40,
+"props": {
+"content": "Sản phẩm giúp tăng 3x chuyển đổi.",
+"fontSize": 14,
+"color": "#374151",
+"textAlign": "left"
+}
+},
+// Gallery placeholders (using colored rectangles or images)
+{
+"type": "rect",
+"x": 20,
+"y": 680,
+"w": 140,
+"h": 120,
+"props": {
+"backgroundColor": "#f8fafc",
+"borderRadius": "10px"
+}
+},
+{
+"type": "rect",
+"x": 180,
+"y": 680,
+"w": 140,
+"h": 120,
+"props": {
+"backgroundColor": "#f8fafc",
+"borderRadius": "10px"
+}
+},
+{
+"type": "rect",
+"x": 340,
+"y": 680,
+"w": 140,
+"h": 120,
+"props": {
+"backgroundColor": "#f8fafc",
+"borderRadius": "10px"
+}
+},
+// Pricing Section
+{
+"type": "text",
+"x": 20,
+"y": 830,
+"w": 220,
+"h": 20,
+"props": {
+"content": "Starter",
+"fontSize": 18,
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 850,
+"w": 220,
+"h": 20,
+"props": {
+"content": "0 VND",
+"fontSize": 20,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 870,
+"w": 220,
+"h": 40,
+"props": {
+"content": "Tối đa 1 user; 1GB lưu trữ; Email support",
+"fontSize": 12,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 260,
+"y": 830,
+"w": 220,
+"h": 20,
+"props": {
+"content": "Pro",
+"fontSize": 18,
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 260,
+"y": 850,
+"w": 220,
+"h": 20,
+"props": {
+"content": "490.000 VND",
+"fontSize": 20,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 260,
+"y": 870,
+"w": 220,
+"h": 40,
+"props": {
+"content": "10 users; 50GB lưu trữ; Priority support",
+"fontSize": 12,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 500,
+"y": 830,
+"w": 220,
+"h": 20,
+"props": {
+"content": "Enterprise",
+"fontSize": 18,
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 500,
+"y": 850,
+"w": 220,
+"h": 20,
+"props": {
+"content": "Tùy chỉnh",
+"fontSize": 20,
+"fontWeight": "bold",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 500,
+"y": 870,
+"w": 220,
+"h": 40,
+"props": {
+"content": "KH riêng; SLA 24/7; Đào tạo",
+"fontSize": 12,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+// FAQ
+{
+"type": "text",
+"x": 20,
+"y": 940,
+"w": 560,
+"h": 20,
+"props": {
+"content": "Sản phẩm có dùng thử không?",
+"fontSize": 16,
+"fontWeight": "600",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 960,
+"w": 560,
+"h": 20,
+"props": {
+"content": "Có, 14 ngày miễn phí.",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 990,
+"w": 560,
+"h": 20,
+"props": {
+"content": "Thanh toán bằng gì?",
+"fontSize": 16,
+"fontWeight": "600",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 1010,
+"w": 560,
+"h": 20,
+"props": {
+"content": "Thẻ quốc tế, chuyển khoản.",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+// Contact Form (approximated with text inputs as text blocks)
+{
+"type": "text",
+"x": 20,
+"y": 1060,
+"w": 200,
+"h": 30,
+"props": {
+"content": "Tên",
+"fontSize": 14,
+"textAlign": "left",
+"border": "1px solid #e6eaf0",
+"padding": "10px",
+"borderRadius": "8px"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 1100,
+"w": 200,
+"h": 30,
+"props": {
+"content": "Email",
+"fontSize": 14,
+"textAlign": "left",
+"border": "1px solid #e6eaf0",
+"padding": "10px",
+"borderRadius": "8px"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 1140,
+"w": 200,
+"h": 30,
+"props": {
+"content": "Công ty",
+"fontSize": 14,
+"textAlign": "left",
+"border": "1px solid #e6eaf0",
+"padding": "10px",
+"borderRadius": "8px"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 1180,
+"w": 640,
+"h": 80,
+"props": {
+"content": "Nhu cầu",
+"fontSize": 14,
+"textAlign": "left",
+"border": "1px solid #e6eaf0",
+"padding": "10px",
+"borderRadius": "8px"
+}
+},
+{
+"type": "text",
+"x": 20,
+"y": 1280,
+"w": 150,
+"h": 40,
+"props": {
+"content": "Gửi yêu cầu",
+"fontSize": 16,
+"fontWeight": "600",
+"backgroundColor": "#0066ff",
+"color": "#fff",
+"textAlign": "center",
+"padding": "12px 18px",
+"borderRadius": "10px"
+}
+},
+// Footer
+{
+"type": "text",
+"x": 20,
+"y": 1350,
+"w": 200,
+"h": 20,
+"props": {
+"content": "© 2025 Brand",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "left"
+}
+},
+{
+"type": "text",
+"x": 900,
+"y": 1350,
+"w": 200,
+"h": 20,
+"props": {
+"content": "Privacy | Terms",
+"fontSize": 14,
+"color": "#6b7280",
+"textAlign": "right"
+}
+}
+]
+},
                 {
                     name: 'Blog Layout',
                     description: 'Template cho blog với sidebar',
