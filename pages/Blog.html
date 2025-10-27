@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../assets/css/menu.css">
     <title>Blog - ProjectHub | Creative Insights & Inspiration</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {
             box-sizing: border-box;
@@ -219,6 +220,7 @@
     <!-- Hero Section -->
     <!-- Hero Section -->
 <section class="relative bg-white py-16 lg:py-24 overflow-hidden">
+
     <!-- Background Pattern -->
     <div class="absolute inset-0 hero-pattern opacity-30"></div>
     
@@ -582,6 +584,31 @@
             </div>
         </div>
     </section>
+    <!-- Newsletter Subscription Section -->
+<section class="py-16 bg-gradient-to-r from-blue-50 to-purple-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Stay Inspired Weekly</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Get the latest creative insights, tutorials, and industry news delivered straight to your inbox.</p>
+        </div>
+        <form onsubmit="subscribeNewsletter(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+            <input 
+                type="email" 
+                id="newsletter-email" 
+                placeholder="Enter your email address" 
+                required 
+                class="flex-1 px-6 py-4 rounded-xl border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-lg"
+            >
+            <button 
+                type="submit" 
+                class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+                Subscribe
+            </button>
+        </form>
+        <p class="text-sm text-gray-500 mt-4">No spam, ever. Unsubscribe anytime.</p>
+    </div>
+</section>
 
     <!-- Blog Posts Section -->
     <section id="blogs-section" class="py-20 bg-gray-50">
@@ -765,17 +792,25 @@
                         </div>
                         
                         <!-- Cover Image -->
-                        <div>
-                            <label for="cover-image" class="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors">
-                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                                </svg>
-                                <p class="text-gray-600 mb-2">Click to upload or drag and drop</p>
-                                <p class="text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
-                                <input type="file" name="coverImage" accept="image/*" class="hidden">
-                            </div>
-                        </div>
+                        <!-- Cover Image -->
+<div id="upload-area">
+    <label for="cover-image" class="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
+    <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer" onclick="document.getElementById('cover-image').click()">
+        <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        <p class="text-gray-600 mb-2">Click to upload or drag and drop</p>
+        <p class="text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
+        <input type="file" id="cover-image" name="coverImage" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+    </div>
+    <div id="image-preview" class="mt-4 hidden">
+        <img id="preview-img" class="max-w-full h-48 object-cover rounded-xl" alt="Preview">
+        <button onclick="removeImage()" class="mt-2 text-red-600 text-sm hover:underline">Remove</button>
+    </div>
+</div>
+
+<!-- Thêm preview Markdown dưới textarea content -->
+<div id="markdown-preview" class="mt-4 p-4 bg-gray-50 rounded-xl hidden"></div>
                         
                         <!-- Content -->
                         <div>
@@ -871,7 +906,47 @@
             </div>
         </div>
     </div>
-
+<!-- About Authors Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Meet Our Expert Contributors</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center fade-in stagger-1">
+                <div class="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl">
+                    SC
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Sarah Chen</h3>
+                <p class="text-gray-600 mb-4">Design Systems Lead at Google. Passionate about scalable UI/UX solutions and AI in design.</p>
+                <div class="flex justify-center space-x-4 text-blue-600">
+                    <a href="#" class="hover:underline">Articles</a>
+                    <a href="#" class="hover:underline">Follow</a>
+                </div>
+            </div>
+            <div class="text-center fade-in stagger-2">
+                <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl">
+                    MJ
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Mike Johnson</h3>
+                <p class="text-gray-600 mb-4">Creative Business Consultant. Helps freelancers build sustainable 6-figure agencies.</p>
+                <div class="flex justify-center space-x-4 text-green-600">
+                    <a href="#" class="hover:underline">Articles</a>
+                    <a href="#" class="hover:underline">Follow</a>
+                </div>
+            </div>
+            <div class="text-center fade-in stagger-3">
+                <div class="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl">
+                    EW
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Emma Wilson</h3>
+                <p class="text-gray-600 mb-4">Senior Color Theorist. Specializes in visual psychology and brand identity design.</p>
+                <div class="flex justify-center space-x-4 text-purple-600">
+                    <a href="#" class="hover:underline">Articles</a>
+                    <a href="#" class="hover:underline">Follow</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- Footer -->
     <footer class="bg-gray-50 border-t border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -939,7 +1014,7 @@
             5: { likes: 33, comments: 9, shares: 12, liked: false },
             6: { likes: 47, comments: 18, shares: 8, liked: false }
         };
-
+    
         // Blog content data
         let blogContent = {
             1: {
@@ -1119,7 +1194,7 @@
                 `
             }
         };
-
+    
         // Comments data
         let commentsData = {
             1: [
@@ -1138,7 +1213,20 @@
                 { author: "Sarah Chen", time: "3 hours ago", text: "The prevention strategies are gold. Wish I had read this earlier in my career.", avatar: "SC" }
             ]
         };
-
+    
+        // Persistent storage functions
+        function loadData() {
+            const savedBlogData = localStorage.getItem('blogData');
+            const savedCommentsData = localStorage.getItem('commentsData');
+            if (savedBlogData) blogData = JSON.parse(savedBlogData);
+            if (savedCommentsData) commentsData = JSON.parse(savedCommentsData);
+        }
+    
+        function saveData() {
+            localStorage.setItem('blogData', JSON.stringify(blogData));
+            localStorage.setItem('commentsData', JSON.stringify(commentsData));
+        }
+    
         // Open blog detail modal
         function openBlogDetail(blogId) {
             const blog = blogContent[blogId];
@@ -1290,13 +1378,13 @@
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
+    
         // Close blog detail modal
         function closeBlogDetail() {
             document.getElementById('blog-detail-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-
+    
         // Like functionality
         function toggleLike(blogId) {
             const blog = blogData[blogId];
@@ -1322,9 +1410,10 @@
             }
             
             likeCount.textContent = blog.likes;
+            saveData();
             showNotification(blog.liked ? 'Liked!' : 'Unliked!');
         }
-
+    
         // Comment functionality
         function toggleComments(blogId) {
             const commentsSection = document.getElementById(`comments-${blogId}`);
@@ -1339,7 +1428,7 @@
                 commentBtn.classList.remove('active');
             }
         }
-
+    
         // Load comments
         function loadComments(blogId) {
             const commentsContainer = document.getElementById(`comments-list-${blogId}`);
@@ -1362,7 +1451,7 @@
                 </div>
             `).join('');
         }
-
+    
         // Add comment
         function addComment(blogId) {
             const input = document.getElementById(`comment-input-${blogId}`);
@@ -1381,18 +1470,21 @@
                 });
                 
                 blogData[blogId].comments++;
-                document.querySelector(`[data-blog-id="${blogId}"] .comment-count`).textContent = blogData[blogId].comments;
+                document.querySelector(`#blog-detail-modal .comment-count`).textContent = blogData[blogId].comments;
                 
                 input.value = '';
                 loadComments(blogId);
+                saveData();
+                showNotification('Comment added!');
             }
         }
-
+    
         // Share functionality
         function shareBlog(blogId) {
             const blog = blogData[blogId];
             blog.shares++;
-            document.querySelector(`[data-blog-id="${blogId}"] .share-count`).textContent = blog.shares;
+            document.querySelector(`#blog-detail-modal .share-count`).textContent = blog.shares;
+            saveData();
             
             // Simple share simulation
             if (navigator.share) {
@@ -1408,11 +1500,12 @@
                 });
             }
         }
-
+    
         // Show notification
-        function showNotification(message) {
+        function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
+            notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
             notification.textContent = message;
             document.body.appendChild(notification);
             
@@ -1427,7 +1520,7 @@
                 }, 300);
             }, 3000);
         }
-
+    
         // Scroll to blogs section
         function scrollToBlogs() {
             document.getElementById('blogs-section').scrollIntoView({
@@ -1435,38 +1528,38 @@
                 block: 'start'
             });
         }
-
+    
         // Show categories modal
         function showCategories() {
             document.getElementById('categories-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
+    
         // Hide categories modal
         function hideCategories() {
             document.getElementById('categories-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-
+    
         // Show write article form
         function showWriteForm() {
             document.getElementById('write-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
-
+    
         // Hide write article form
         function hideWriteForm() {
             document.getElementById('write-modal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
-
+    
         // Filter blogs by category
         function filterByCategory(category) {
             hideCategories();
             showNotification(`Showing ${category} articles`);
             // In a real app, this would filter the blog posts
         }
-
+    
         // Submit article
         function submitArticle(event) {
             event.preventDefault();
@@ -1482,7 +1575,7 @@
             
             // Validate form
             if (!article.title || !article.content) {
-                showNotification('Please fill in all required fields');
+                showNotification('Please fill in all required fields', 'error');
                 return;
             }
             
@@ -1491,14 +1584,14 @@
             hideWriteForm();
             event.target.reset();
         }
-
+    
         // Preview article
         function previewArticle() {
             const title = document.getElementById('article-title').value;
             const content = document.getElementById('article-content').value;
             
             if (!title || !content) {
-                showNotification('Please add title and content to preview');
+                showNotification('Please add title and content to preview', 'error');
                 return;
             }
             
@@ -1520,7 +1613,79 @@
                 </html>
             `);
         }
-
+    
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletter-email').value;
+            if (email && /\S+@\S+\.\S+/.test(email)) {
+                // Demo: Lưu vào localStorage hoặc gửi API
+                const subscribers = JSON.parse(localStorage.getItem('subscribers') || '[]');
+                if (!subscribers.includes(email)) {
+                    subscribers.push(email);
+                    localStorage.setItem('subscribers', JSON.stringify(subscribers));
+                }
+                showNotification('Thanks for subscribing! Check your inbox.');
+                event.target.reset();
+            } else {
+                showNotification('Please enter a valid email.', 'error');
+            }
+        }
+    
+        // Image upload handling
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file && file.size < 10 * 1024 * 1024 && ['image/png', 'image/jpeg', 'image/gif'].includes(file.type)) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('image-preview');
+                    document.getElementById('preview-img').src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showNotification('Invalid file: Must be PNG/JPG/GIF under 10MB', 'error');
+            }
+        }
+    
+        function removeImage() {
+            document.getElementById('cover-image').value = '';
+            document.getElementById('image-preview').classList.add('hidden');
+        }
+    
+        // Drag & drop for upload area
+        document.addEventListener('DOMContentLoaded', () => {
+            const uploadArea = document.getElementById('upload-area');
+            if (uploadArea) {
+                uploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.add('bg-blue-50');
+                });
+                uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('bg-blue-50'));
+                uploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadArea.classList.remove('bg-blue-50');
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        document.getElementById('cover-image').files = dt.files;
+                        handleImageUpload({ target: { files: [file] } });
+                    }
+                });
+            }
+    
+            // Markdown preview
+            const contentTextarea = document.getElementById('article-content');
+            if (contentTextarea) {
+                contentTextarea.addEventListener('input', (e) => {
+                    const preview = document.getElementById('markdown-preview');
+                    preview.innerHTML = marked.parse(e.target.value);
+                    preview.classList.remove('hidden');
+                });
+            }
+        });
+    
         // Search functionality with real filtering
         let allBlogs = [
             { id: 1, title: "The Future of Design: AI-Powered Creative Tools", author: "Sarah Chen", category: "Design Trends", tags: ["AI", "Design", "Technology"], readTime: "5 min read", date: "Dec 15, 2024" },
@@ -1533,24 +1698,24 @@
             { id: 8, title: "Building Accessible Design Systems", author: "Maria Garcia", category: "Tutorial", tags: ["Accessibility", "Design Systems", "UX"], readTime: "9 min read", date: "Nov 30, 2024" },
             { id: 9, title: "The Psychology of Color in Branding", author: "James Wilson", category: "Business", tags: ["Branding", "Psychology", "Color"], readTime: "7 min read", date: "Nov 28, 2024" }
         ];
-
+    
         let filteredBlogs = [...allBlogs];
         let currentPage = 1;
         const blogsPerPage = 6;
-
+    
         function showSearchDropdown() {
             document.getElementById('search-dropdown').classList.remove('hidden');
         }
-
+    
         function hideSearchDropdown() {
             document.getElementById('search-dropdown').classList.add('hidden');
         }
-
+    
         function toggleSearchFilters() {
             const filters = document.getElementById('search-filters');
             filters.classList.toggle('hidden');
         }
-
+    
         function handleSearch(event) {
             const query = event.target.value;
             if (event.key === 'Enter' && query.trim()) {
@@ -1563,13 +1728,13 @@
                 updatePagination();
             }
         }
-
+    
         function quickSearch(query) {
             document.getElementById('search-input').value = query;
             performSearch(query);
             hideSearchDropdown();
         }
-
+    
         function performSearch(query) {
             const searchTerm = query.toLowerCase();
             filteredBlogs = allBlogs.filter(blog => 
@@ -1590,7 +1755,7 @@
                 showNotification(`Found ${filteredBlogs.length} articles for "${query}"`);
             }
         }
-
+    
         function applyFilters() {
             const category = document.querySelector('select[name="category"]').value;
             const readingTime = document.querySelector('select[name="readingTime"]').value;
@@ -1606,7 +1771,7 @@
             // Apply reading time filter
             if (readingTime) {
                 filtered = filtered.filter(blog => {
-                    const minutes = parseInt(blog.readTime);
+                    const minutes = parseInt(blog.readTime.match(/\d+/)?.[0] || 0);
                     switch(readingTime) {
                         case 'short': return minutes < 5;
                         case 'medium': return minutes >= 5 && minutes <= 10;
@@ -1621,6 +1786,9 @@
                 filtered.sort((a, b) => (blogData[b.id]?.likes || 0) - (blogData[a.id]?.likes || 0));
             } else if (sortBy === 'trending') {
                 filtered.sort((a, b) => (blogData[b.id]?.shares || 0) - (blogData[a.id]?.shares || 0));
+            } else {
+                // Default: newest (reverse date)
+                filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
             }
             
             filteredBlogs = filtered;
@@ -1630,12 +1798,12 @@
             
             showNotification(`Applied filters - ${filtered.length} articles found`);
         }
-
+    
         function openFeaturedStory() {
             showNotification('Opening featured story...');
             // In a real app, this would open the featured story
         }
-
+    
         // Render blogs function
         function renderBlogs() {
             const container = document.getElementById('blogs-container');
@@ -1654,7 +1822,7 @@
                 'from-teal-400 to-blue-600',
                 'from-red-400 to-pink-600'
             ];
-
+    
             const categoryIcons = {
                 'Design Trends': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"/></svg>',
                 'Business': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>',
@@ -1663,6 +1831,20 @@
                 'Technology': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>',
                 'Career': '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0V4a2 2 0 00-2-2H10a2 2 0 00-2 2v2"/></svg>'
             };
+            
+            if (blogsToShow.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">No articles found</h3>
+                        <p class="text-gray-600 mb-6">Try adjusting your search terms or filters.</p>
+                        <button onclick="clearFilters()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-medium">Clear Search</button>
+                    </div>
+                `;
+                return;
+            }
             
             container.innerHTML = blogsToShow.map((blog, index) => {
                 const gradient = gradients[blog.id % gradients.length];
@@ -1731,7 +1913,7 @@
                 `;
             }).join('');
         }
-
+    
         // Update pagination
         function updatePagination() {
             const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
@@ -1795,7 +1977,7 @@
             
             pagination.innerHTML = paginationHTML;
         }
-
+    
         // Change page function
         function changePage(page) {
             const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
@@ -1811,7 +1993,7 @@
                 block: 'start'
             });
         }
-
+    
         // Clear filters function
         function clearFilters() {
             document.querySelector('select[name="category"]').value = '';
@@ -1826,9 +2008,10 @@
             
             showNotification('Filters cleared');
         }
-
+    
         // Initialize page
         document.addEventListener('DOMContentLoaded', () => {
+            loadData();
             // Render initial blogs and pagination
             renderBlogs();
             updatePagination();
@@ -1850,7 +2033,7 @@
                 
                 observer.observe(el);
             });
-
+    
             // Close modals when clicking outside
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('modal-backdrop')) {
@@ -1864,7 +2047,7 @@
                     hideSearchDropdown();
                 }
             });
-
+    
             // Handle escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
@@ -1875,6 +2058,5 @@
                 }
             });
         });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993eedc48418e2e4',t:'MTc2MTM2NjEwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    </script></body>
 </html>
